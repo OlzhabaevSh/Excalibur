@@ -6,8 +6,16 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{0D334158-8AB7-44BF-97A1-8CD257FB7CF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Admin", "Core.Admin\Core.Admin.csproj", "{B08BC4D9-1F40-4FC7-A985-9F42364ACF78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D334158-8AB7-44BF-97A1-8CD257FB7CF3} = {0D334158-8AB7-44BF-97A1-8CD257FB7CF3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.HR", "Core.HR\Core.HR.csproj", "{E784BCA6-2FF8-4B34-99F2-9573488205BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D334158-8AB7-44BF-97A1-8CD257FB7CF3} = {0D334158-8AB7-44BF-97A1-8CD257FB7CF3}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{D4A96914-6EF9-49C5-B624-9AC9DD2230DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
