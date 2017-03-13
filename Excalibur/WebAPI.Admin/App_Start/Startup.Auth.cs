@@ -9,7 +9,7 @@ using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebAPI.Admin.Providers;
-using WebAPI.Admin.Models;
+using Core.Admin.Models;
 
 namespace WebAPI.Admin
 {

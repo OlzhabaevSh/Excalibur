@@ -10,6 +10,6 @@ namespace Core.Interfaces
     {
         IStore<TSource, TKey> Store { get; }
 
-        TSource Find(TKey key);
+        Task<TSource> Find(TKey key);
     }
 }
