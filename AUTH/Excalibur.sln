@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.HR", "Core.HR\Core.HR.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{D4A96914-6EF9-49C5-B624-9AC9DD2230DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Admin", "WebAPI.Admin\WebAPI.Admin.csproj", "{CF195EA2-DE76-4873-A5D5-786B61208A98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{E784BCA6-2FF8-4B34-99F2-9573488205BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E784BCA6-2FF8-4B34-99F2-9573488205BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E784BCA6-2FF8-4B34-99F2-9573488205BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF195EA2-DE76-4873-A5D5-786B61208A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF195EA2-DE76-4873-A5D5-786B61208A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF195EA2-DE76-4873-A5D5-786B61208A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF195EA2-DE76-4873-A5D5-786B61208A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
