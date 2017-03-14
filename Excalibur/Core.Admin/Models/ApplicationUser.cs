@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Core.ComplexTypes;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Core.Admin.Models
 {
     public class ApplicationUser: IdentityUser
     {
+        public PersonInfo PersonInfo { get; set; }
+
         public virtual ICollection<ApplicationList> ApplicationList { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
