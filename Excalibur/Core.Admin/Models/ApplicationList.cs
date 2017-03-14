@@ -16,11 +16,11 @@ namespace Core.Admin.Models
         public string ApplicationId { get; set; }
         public virtual Application Application { get; set; }
 
-        [ForeignKey("Application")]
+        [ForeignKey("ApplicationUser")]
         public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("Application")]
+        [ForeignKey("Role")]
         public string RoleId { get; set; }
         public virtual IdentityRole Role { get; set; }
 
