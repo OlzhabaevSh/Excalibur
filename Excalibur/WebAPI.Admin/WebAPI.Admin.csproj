@@ -318,6 +318,10 @@
       <Project>{af71c5d4-e1a9-4184-b8c1-6a1934a91499}</Project>
       <Name>Core.Admin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{ECA99F94-8B0E-4484-85E5-8DFCDC0AA582}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
