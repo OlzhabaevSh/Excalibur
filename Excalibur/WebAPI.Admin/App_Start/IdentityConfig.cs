@@ -15,7 +15,13 @@ namespace WebAPI.Admin
             : base(store)
         {
         }
-        
+
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        {
+
+            return base.CreateAsync(user);
+        }
+
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new AdminUserStore(context.Get<ApplicationDbContext>()));
