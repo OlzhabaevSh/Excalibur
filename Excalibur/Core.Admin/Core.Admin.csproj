@@ -56,6 +56,7 @@
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationList.cs" />
+    <Compile Include="Models\ApplicationRoles.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ApplicationListVM.cs" />
