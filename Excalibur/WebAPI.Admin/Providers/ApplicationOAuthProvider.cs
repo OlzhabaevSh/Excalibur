@@ -20,7 +20,7 @@ namespace WebAPI.Admin.Providers
 
         public ApplicationOAuthProvider(string publicClientId)
         {
-            if (string.IsNullOrEmpty(_publicClientId))
+            if (string.IsNullOrEmpty(publicClientId))
             {
                 throw new ArgumentNullException("publicClientId");
             }

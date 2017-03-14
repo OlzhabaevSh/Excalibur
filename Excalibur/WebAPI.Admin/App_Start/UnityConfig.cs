@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Core.Admin.Models;
 using Core.Admin.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace WebAPI.Admin.App_Start
 {
@@ -38,7 +39,9 @@ namespace WebAPI.Admin.App_Start
             // container.LoadConfiguration();
             container.RegisterType<ApplicationDbContext, ApplicationDbContext>();
             container.RegisterType<IUserStoreAdmin, AdminUserStore>();
-            container.RegisterType<ApplicationUserManager, ApplicationUserManager>();
+            //container.RegisterType<ApplicationUserManager, ApplicationUserManager>();
+            container.RegisterType<IUserStore<ApplicationUser>, AdminUserStore>();
+
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
         }
