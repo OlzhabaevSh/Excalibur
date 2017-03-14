@@ -17,6 +17,7 @@ using WebAPI.Admin.Models;
 using WebAPI.Admin.Providers;
 using WebAPI.Admin.Results;
 using Core.Admin.Models;
+using Core.ComplexTypes;
 
 namespace WebAPI.Admin.Controllers
 {
@@ -329,8 +330,21 @@ namespace WebAPI.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser()
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                PersonInfo = new PersonInfo()
+                {
+                    BirthDate = model.BirthDate,
+                    FirstName = model.FirstName,
+                    IIN = model.IIN,
+                    LastName = model.LastName,
+                    MiddleName = model.MiddleName
+                }
 
+            };
+           
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
