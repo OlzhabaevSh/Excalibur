@@ -13,11 +13,22 @@ namespace WebAPI.Admin
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
-            : base(store)
+        private readonly IUserStoreAdmin _store;
+        public ApplicationUserManager(IUserStoreAdmin store):base(store)            
         {
+            _store = store;
+        }
+
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+        {
+            var task = _store.CreateAsync(user);
+            return Task.FromResult(IdentityResult.Success);
         }
         
+
+
+
+
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var cntr = UnityConfig.GetConfiguredContainer();

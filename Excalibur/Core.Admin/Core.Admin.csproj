@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ApplicationUserExtension.cs" />
     <Compile Include="Interfaces\IUserStoreAdmin.cs" />
     <Compile Include="Migrations\201703140842251_init.cs" />
     <Compile Include="Migrations\201703140842251_init.Designer.cs">
