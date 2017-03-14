@@ -280,7 +280,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -317,6 +319,10 @@
     <ProjectReference Include="..\Core.Admin\Core.Admin.csproj">
       <Project>{af71c5d4-e1a9-4184-b8c1-6a1934a91499}</Project>
       <Name>Core.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{eca99f94-8b0e-4484-85e5-8dfcdc0aa582}</Project>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

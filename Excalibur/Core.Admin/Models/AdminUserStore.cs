@@ -21,35 +21,46 @@ namespace Core.Admin.Models
 
         public Task CreateAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
-        }
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
 
-        public Task<ApplicationUser> CreateElement(string element)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(0);
         }
 
         public Task DeleteAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            var applicationList = _dbContext.ApplicationLists.Where(x=>x.UserId.Equals(user.Id));
+            _dbContext.ApplicationLists.RemoveRange(applicationList);
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+
+            return Task.FromResult(0);
         }
+
+        public Task<ApplicationUser> FindByIdAsync(string userId)
+        {
+            return Task.FromResult(_dbContext.Users.Find(userId));
+        }
+
+        public Task<ApplicationUser> FindByNameAsync(string userName)
+        {
+            return Task.FromResult(_dbContext.Users.FirstOrDefault(x=>x.UserName.Equals(userName)));
+        }
+
+        public Task UpdateAsync(ApplicationUser user)
+        {
+            _dbContext.SaveChanges();
+            return Task.FromResult(0);
+        }
+
+        #region Core.Interface.IStore
 
         public Task<ApplicationUser> DeleteElement(ApplicationUser key)
         {
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApplicationUser> FindByIdAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApplicationUser> FindByNameAsync(string userName)
+        public Task<ApplicationUser> CreateElement(string element)
         {
             throw new NotImplementedException();
         }
@@ -84,14 +95,17 @@ namespace Core.Admin.Models
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public Task<ApplicationUser> UpdateElement(string key, ApplicationUser element)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        public void Dispose()
+        {
+            _dbContext.Dispose();
         }
     }
 }
