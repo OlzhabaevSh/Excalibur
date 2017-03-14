@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using WebAPI.Admin.Models;
 using WebAPI.Admin.Providers;
 using WebAPI.Admin.Results;
+using Core.Admin.Models;
 
 namespace WebAPI.Admin.Controllers
 {
