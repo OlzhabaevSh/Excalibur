@@ -48,6 +48,19 @@ namespace WebAPI.Admin.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string IIN { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public DateTime? BirthDate { get; set; }
     }
 
     public class RegisterExternalBindingModel

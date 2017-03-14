@@ -24,7 +24,7 @@ namespace Core.Admin.Models
 
         #region Identity.IUserStore
         public Task CreateAsync(ApplicationUser user)
-        {
+        {            
             _dbContext.Users.Add(user);
             return _dbContext.SaveChangesAsync();
         }
