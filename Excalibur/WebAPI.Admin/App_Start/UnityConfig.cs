@@ -2,6 +2,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Core.Admin.Models;
+using Core.Admin.Interfaces;
 
 namespace WebAPI.Admin.App_Start
 {
@@ -36,6 +37,8 @@ namespace WebAPI.Admin.App_Start
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
             container.RegisterType<ApplicationDbContext, ApplicationDbContext>();
+            container.RegisterType<IUserStoreAdmin, AdminUserStore>();
+            container.RegisterType<ApplicationUserManager, ApplicationUserManager>();
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
         }
