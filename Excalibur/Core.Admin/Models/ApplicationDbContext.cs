@@ -19,10 +19,10 @@ namespace Core.Admin.Models
         {
         }
 
-        public ApplicationDbContext(string connectionString)
-            : base(connectionString, throwIfV1Schema: false)
-        {
-        }
+        //public ApplicationDbContext(string connectionString)
+        //    : base(connectionString, throwIfV1Schema: false)
+        //{
+        //}
 
         public static ApplicationDbContext Create()
         {

@@ -21,8 +21,10 @@ namespace WebAPI.Admin
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var cntr = UnityConfig.GetConfiguredContainer();
+            
+            var store = cntr.Resolve<IUserStore<ApplicationUser>>();
 
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(cntr.Resolve<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(store);
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {

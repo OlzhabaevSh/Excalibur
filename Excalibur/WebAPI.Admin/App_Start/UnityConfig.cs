@@ -39,9 +39,7 @@ namespace WebAPI.Admin.App_Start
             // container.LoadConfiguration();
             container.RegisterType<ApplicationDbContext, ApplicationDbContext>();
             container.RegisterType<IUserStoreAdmin, AdminUserStore>();
-            //container.RegisterType<ApplicationUserManager, ApplicationUserManager>();
             container.RegisterType<IUserStore<ApplicationUser>, AdminUserStore>();
-
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
         }

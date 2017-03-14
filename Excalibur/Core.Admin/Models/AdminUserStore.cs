@@ -41,7 +41,7 @@ namespace Core.Admin.Models
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public Task<ApplicationUser> FindByIdAsync(string userId)
