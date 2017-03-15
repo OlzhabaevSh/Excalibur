@@ -1,39 +1,53 @@
-﻿using System;
+﻿using Core.Admin.Interfaces;
+using Core.Admin.Models;
+using Core.Admin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace WebAPI.Admin.Controllers
 {
     public class ApplicationController : ApiController
     {
-        // GET: api/Application
-        public IEnumerable<string> Get()
+        private readonly IManagerAdmin<Application> _manager;
+
+        public ApplicationController(IManagerAdmin<Application> manager)
         {
-            return new string[] { "value1", "value2" };
+            _manager = manager;
+        }
+
+        // GET: api/Application
+        public Task<IEnumerable<ApplicationVM>> Get()
+        {
+            throw new NotImplementedException();
         }
 
         // GET: api/Application/5
-        public string Get(int id)
+        public Task<ApplicationVM> Get(int id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST: api/Application
-        public void Post([FromBody]string value)
+        public IHttpActionResult Post([FromBody]string ApplicationVM)
         {
+            throw new NotImplementedException();
         }
 
         // PUT: api/Application/5
-        public void Put(int id, [FromBody]string value)
+        public IHttpActionResult Put(string id, [FromBody]string ApplicationVM)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/Application/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
+            throw new NotImplementedException();
         }
     }
 }
