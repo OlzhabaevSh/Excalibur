@@ -12,6 +12,8 @@ using Microsoft.Owin.Security.OAuth;
 using WebAPI.Admin.Models;
 using Core.Admin.Models;
 using Core.Admin.Managers;
+using WebAPI.Admin.App_Start;
+using Microsoft.Practices.Unity;
 
 namespace WebAPI.Admin.Providers
 {
@@ -31,7 +33,8 @@ namespace WebAPI.Admin.Providers
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            
+            var userManager = UnityConfig.GetConfiguredContainer().Resolve<ApplicationUserManager>(); //context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 

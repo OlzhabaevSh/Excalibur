@@ -165,21 +165,16 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public async Task<ApplicationUser> GetElement(Expression<Func<ApplicationUser, bool>> predicate, bool has)
-        {
-            //Expression<Func<ApplicationUser, bool>> expr = x => predicate(x);
-
-
-            var res = await _dbContext.Users.FirstOrDefaultAsync(predicate);
-            return res;
-        }
-
-        public Task<ApplicationUser> GetElement(List<Func<ApplicationUser, bool>> predicates)
+        public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-
+        public Task<ApplicationUser> GetElementByExpression(Expression<Func<ApplicationUser, bool>> predicate)
+        {
+            var item = _dbContext.Users.FirstOrDefaultAsync(predicate);
+            return item;
+        }
 
         public Task<ApplicationUser> UpdateElement(string key, ApplicationUser element)
         {
@@ -201,13 +196,6 @@ namespace Core.Admin.Stores
             user.Id = identityUser.Id;
             user.UserName = identityUser.UserName;
         }
-
-        public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-
         #endregion
     }
 }

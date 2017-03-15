@@ -51,12 +51,7 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public Task<Application> GetElement(List<Func<Application, bool>> predicates)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Application> GetElement(Expression<Func<Application, bool>> predicate, bool has)
+        public Task<Application> GetElementByExpression(Expression<Func<Application, bool>> predicate)
         {
             throw new NotImplementedException();
         }
