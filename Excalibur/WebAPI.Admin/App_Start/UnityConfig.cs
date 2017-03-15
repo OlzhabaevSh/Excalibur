@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Core.Admin.Models;
 using Core.Admin.Interfaces;
+using Core.Admin.Stores;
 
 namespace WebAPI.Admin.App_Start
 {
