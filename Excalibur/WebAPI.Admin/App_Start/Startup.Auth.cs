@@ -25,8 +25,8 @@ namespace WebAPI.Admin
         {
             // Настройка контекста базы данных и диспетчера пользователей для использования одного экземпляра на запрос
             app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            
+            app.CreatePerOwinContext<ApplicationUserManager>(IdentityConfig.Create); //Метод создания находится в IdentityConfig, сам класс лежит в Core.Admin.Managers
+
             // Включение использования файла cookie, в котором приложение может хранить информацию для пользователя, выполнившего вход,
             // и использование файла cookie для временного хранения информации о входах пользователя с помощью стороннего поставщика входа
             app.UseCookieAuthentication(new CookieAuthenticationOptions());

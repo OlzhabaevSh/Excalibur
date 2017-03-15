@@ -7,24 +7,14 @@ using Core.Admin.Models;
 using WebAPI.Admin.App_Start;
 using Microsoft.Practices.Unity;
 using Core.Admin.Interfaces;
+using Core.Admin.Managers;
 
 namespace WebAPI.Admin
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class IdentityConfig
     {
-        private readonly IUserStoreAdmin _store;
-        public ApplicationUserManager(IUserStoreAdmin store):base(store)            
-        {
-            _store = store;
-        }
-
-        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
-        {
-            var task = _store.CreateAsync(user);
-            return Task.FromResult(IdentityResult.Success);
-        }
         
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
@@ -59,5 +49,7 @@ namespace WebAPI.Admin
 
             return manager;
         }
+
+
     }
 }
