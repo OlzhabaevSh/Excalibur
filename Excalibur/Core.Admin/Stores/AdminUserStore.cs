@@ -135,7 +135,7 @@ namespace Core.Admin.Stores
 
         #region Core.Interface.IStore
 
-        public Task<ApplicationUser> DeleteElement(string key)
+        public Task<bool> DeleteElement(string key)
         {
             throw new NotImplementedException();
         }
