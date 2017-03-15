@@ -11,6 +11,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebAPI.Admin.Models;
 using Core.Admin.Models;
+using Core.Admin.Managers;
 
 namespace WebAPI.Admin.Providers
 {

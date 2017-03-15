@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebAPI.Admin.Providers;
 using Core.Admin.Models;
+using Core.Admin.Managers;
 
 namespace WebAPI.Admin
 {

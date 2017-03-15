@@ -1,7 +1,6 @@
 ﻿using Core.Admin.Extensions;
 using Core.Admin.Interfaces;
-using Core.Interfaces;
-using Microsoft.AspNet.Identity;
+using Core.Admin.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Admin.Models
+namespace Core.Admin.Stores
 {
     public class AdminUserStore : IUserStoreAdmin
     {
@@ -24,14 +23,14 @@ namespace Core.Admin.Models
 
         #region Identity.IUserStore
         public Task CreateAsync(ApplicationUser user)
-        {            
+        {
             _dbContext.Users.Add(user);
             return _dbContext.SaveChangesAsync();
         }
 
         public Task DeleteAsync(ApplicationUser user)
         {
-            var applicationList = _dbContext.ApplicationLists.Where(x=>x.UserId.Equals(user.Id));
+            var applicationList = _dbContext.ApplicationLists.Where(x => x.UserId.Equals(user.Id));
             _dbContext.ApplicationLists.RemoveRange(applicationList);
             _dbContext.Users.Remove(user);
             return _dbContext.SaveChangesAsync();
@@ -44,7 +43,7 @@ namespace Core.Admin.Models
 
         public Task<ApplicationUser> FindByNameAsync(string userName)
         {
-            return Task.FromResult(_dbContext.Users.FirstOrDefault(x=>x.UserName.Equals(userName)));
+            return Task.FromResult(_dbContext.Users.FirstOrDefault(x => x.UserName.Equals(userName)));
         }
 
         public Task UpdateAsync(ApplicationUser user)
@@ -53,20 +52,20 @@ namespace Core.Admin.Models
             _dbContext.Entry(user).State = EntityState.Modified;
             return _dbContext.SaveChangesAsync();
         }
-        #endregion        
-        
+        #endregion
+
         #region Identity.IUserPasswordStore
         public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash)
         {
-            var task = _userStore.SetPasswordHashAsync(user.ToIdentityUser(),passwordHash);
-            SetApplicationUser(user,user.ToIdentityUser());
+            var task = _userStore.SetPasswordHashAsync(user.ToIdentityUser(), passwordHash);
+            SetApplicationUser(user, user.ToIdentityUser());
             return task;
         }
 
         public Task<string> GetPasswordHashAsync(ApplicationUser user)
         {
             var task = _userStore.GetPasswordHashAsync(user.ToIdentityUser());
-            SetApplicationUser(user, user.ToIdentityUser());            
+            SetApplicationUser(user, user.ToIdentityUser());
             return task;
         }
 
@@ -77,7 +76,7 @@ namespace Core.Admin.Models
             return task;
         }
         #endregion
-        
+
         #region Identity.IUserEmailStore
         public Task SetEmailAsync(ApplicationUser user, string email)
         {
@@ -109,10 +108,10 @@ namespace Core.Admin.Models
 
         public Task<ApplicationUser> FindByEmailAsync(string email)
         {
-            return Task.FromResult(_dbContext.Users.FirstOrDefault(x=>x.Email.Equals(email)));
+            return Task.FromResult(_dbContext.Users.FirstOrDefault(x => x.Email.Equals(email)));
         }
-        #endregion
-         
+        #endregion        
+
         #region Core.Interface.IStore
 
         public Task<ApplicationUser> DeleteElement(ApplicationUser key)
@@ -163,6 +162,7 @@ namespace Core.Admin.Models
         }
         #endregion
 
+
         public void Dispose()
         {
             _dbContext.Dispose();
@@ -172,10 +172,12 @@ namespace Core.Admin.Models
         #region private helpers
         private static void SetApplicationUser(ApplicationUser user, IdentityUser identityUser)
         {
-            user.PasswordHash = identityUser.PasswordHash;           
+            user.PasswordHash = identityUser.PasswordHash;
             user.Id = identityUser.Id;
             user.UserName = identityUser.UserName;
         }
+
+
         #endregion
     }
 }

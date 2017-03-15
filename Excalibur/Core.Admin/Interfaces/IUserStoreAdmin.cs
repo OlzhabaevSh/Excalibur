@@ -10,7 +10,11 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Interfaces
 {
-    public interface IUserStoreAdmin : IUserStore<ApplicationUser>, IStore<ApplicationUser, string>, IUserPasswordStore<ApplicationUser>, IUserEmailStore<ApplicationUser>
+    public interface IUserStoreAdmin : 
+        IUserStore<ApplicationUser>, 
+        IStore<ApplicationUser, string>, 
+        IUserPasswordStore<ApplicationUser>, 
+        IUserEmailStore<ApplicationUser>
     {
         
     }

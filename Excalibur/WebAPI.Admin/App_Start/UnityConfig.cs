@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity.Configuration;
 using Core.Admin.Models;
 using Core.Admin.Interfaces;
 using Microsoft.AspNet.Identity;
+using Core.Admin.Stores;
 
 namespace WebAPI.Admin.App_Start
 {
