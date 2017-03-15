@@ -27,6 +27,13 @@ namespace Core.Admin.Managers
             return Task.FromResult(IdentityResult.Success);
         }
 
+        public override Task<ApplicationUser> FindAsync(string userName, string password)
+        {
+            var user = _store.GetElement(x => x.Email == userName && x.PasswordHash == password);
+
+            return user;
+        }
+
         public override Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
         {
             user.PasswordHash = password;

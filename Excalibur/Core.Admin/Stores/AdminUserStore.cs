@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -166,7 +167,10 @@ namespace Core.Admin.Stores
 
         public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
         {
-            throw new NotImplementedException();
+            Expression<Func<ApplicationUser, bool>> expr = x => predicate(x);
+
+            var res = _dbContext.Users.FirstOrDefaultAsync(expr);
+            return res;
         }
 
         public Task<ApplicationUser> GetElement(List<Func<ApplicationUser, bool>> predicates)
