@@ -11,12 +11,12 @@ namespace Core.Admin.Stores
 {
     class ApplicationStore : IStore<Application, string>
     {
-        public Task<Application> CreateElement(string element)
+        public Task<Application> CreateElement(Application element)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Application> DeleteElement(Application key)
+        public Task<Application> DeleteElement(string key)
         {
             throw new NotImplementedException();
         }

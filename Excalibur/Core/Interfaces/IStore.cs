@@ -19,10 +19,10 @@ namespace Core.Interfaces
 
         Task<ICollection<TSourse>> GetCollection(Expression<Func<TSourse, bool>> predicate);
         
-        Task<TSourse> CreateElement(TKey element);
+        Task<TSourse> CreateElement(TSourse element);
 
         Task<TSourse> UpdateElement(TKey key, TSourse element);
 
-        Task<TSourse> DeleteElement(TSourse key);
+        Task<TSourse> DeleteElement(TKey key);
     }
 }

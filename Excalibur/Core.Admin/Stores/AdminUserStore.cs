@@ -135,12 +135,12 @@ namespace Core.Admin.Stores
 
         #region Core.Interface.IStore
 
-        public Task<ApplicationUser> DeleteElement(ApplicationUser key)
+        public Task<ApplicationUser> DeleteElement(string key)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser> CreateElement(string element)
+        public Task<ApplicationUser> CreateElement(ApplicationUser element)
         {
             throw new NotImplementedException();
         }
