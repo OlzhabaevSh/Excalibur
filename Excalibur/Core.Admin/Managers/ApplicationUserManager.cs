@@ -27,6 +27,13 @@ namespace Core.Admin.Managers
             return Task.FromResult(IdentityResult.Success);
         }
 
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+        {
+            user.PasswordHash = password;
+            var task = _store.CreateAsync(user);
+
+            return Task.FromResult(IdentityResult.Success);
+        }
 
         public override Task<IdentityResult> DeleteAsync(ApplicationUser user)
         {
