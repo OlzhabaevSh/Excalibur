@@ -26,10 +26,6 @@ namespace WebAPI.Admin
             return Task.FromResult(IdentityResult.Success);
         }
         
-
-
-
-
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var cntr = UnityConfig.GetConfiguredContainer();
