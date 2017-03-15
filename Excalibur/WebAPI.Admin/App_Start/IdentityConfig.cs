@@ -6,6 +6,7 @@ using Microsoft.Owin;
 using Core.Admin.Models;
 using WebAPI.Admin.App_Start;
 using Microsoft.Practices.Unity;
+using Core.Admin.Interfaces;
 
 namespace WebAPI.Admin
 {
@@ -33,7 +34,7 @@ namespace WebAPI.Admin
         {
             var cntr = UnityConfig.GetConfiguredContainer();
             
-            var store = cntr.Resolve<IUserStore<ApplicationUser>>();
+            var store = cntr.Resolve<IUserStoreAdmin>();
 
             var manager = new ApplicationUserManager(store);
             // Configure validation logic for usernames
