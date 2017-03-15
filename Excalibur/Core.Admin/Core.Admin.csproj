@@ -87,6 +87,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\AdminUserStore.cs" />
+    <Compile Include="Stores\ApplicationStore.cs" />
     <Compile Include="ViewModels\ApplicationListVM.cs" />
     <Compile Include="ViewModels\ApplicationUserVM.cs" />
     <Compile Include="ViewModels\ApplicationVM.cs" />
