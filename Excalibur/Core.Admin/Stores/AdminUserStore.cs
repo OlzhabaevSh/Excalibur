@@ -165,11 +165,12 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
+        public async Task<ApplicationUser> GetElement(Expression<Func<ApplicationUser, bool>> predicate, bool has)
         {
-            Expression<Func<ApplicationUser, bool>> expr = x => predicate(x);
+            //Expression<Func<ApplicationUser, bool>> expr = x => predicate(x);
 
-            var res = _dbContext.Users.FirstOrDefaultAsync(expr);
+
+            var res = await _dbContext.Users.FirstOrDefaultAsync(predicate);
             return res;
         }
 
@@ -199,6 +200,11 @@ namespace Core.Admin.Stores
             user.PasswordHash = identityUser.PasswordHash;
             user.Id = identityUser.Id;
             user.UserName = identityUser.UserName;
+        }
+
+        public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
+        {
+            throw new NotImplementedException();
         }
 
 

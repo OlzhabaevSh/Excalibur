@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,7 @@ namespace Core.Interfaces
         Task<ICollection<TSourse>> GetCollection(Func<TSourse, bool> predicate);
 
         Task<ICollection<TSourse>> GetCollection(List<Func<TSourse, bool>> predicate);
+        Task<TSourse> GetElement(Expression<Func<TSourse, bool>> predicate, bool has);
 
         Task<TSourse> CreateElement(TKey element);
 

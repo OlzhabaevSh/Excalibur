@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Core.Admin.Stores
 {
@@ -51,6 +52,11 @@ namespace Core.Admin.Stores
         }
 
         public Task<Application> GetElement(List<Func<Application, bool>> predicates)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Application> GetElement(Expression<Func<Application, bool>> predicate, bool has)
         {
             throw new NotImplementedException();
         }

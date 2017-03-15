@@ -7,6 +7,7 @@ using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,9 +28,9 @@ namespace Core.Admin.Managers
             return Task.FromResult(IdentityResult.Success);
         }
 
-        public override Task<ApplicationUser> FindAsync(string userName, string password)
+        public async override Task<ApplicationUser> FindAsync(string userName, string password)
         {
-            var user = _store.GetElement(x => x.Email == userName && x.PasswordHash == password);
+            var user = await _store.GetElement(x => x.Email == userName && x.PasswordHash == password, true);
 
             return user;
         }
