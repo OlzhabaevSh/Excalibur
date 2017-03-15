@@ -11,16 +11,14 @@ namespace Core.Interfaces
     {
         Task<TSourse> GetElement(TKey Key);
 
-        Task<TSourse> GetElement(Func<TSourse, bool> predicate);
+        Task<TSourse> GetElement(Expression<Func<TSourse, bool>> predicate);
 
         Task<TSourse> GetElementByExpression(Expression<Func<TSourse, bool>> predicate);
 
         Task<ICollection<TSourse>> GetCollection();
 
-        Task<ICollection<TSourse>> GetCollection(Func<TSourse, bool> predicate);
-
-        Task<ICollection<TSourse>> GetCollection(List<Func<TSourse, bool>> predicate);
-
+        Task<ICollection<TSourse>> GetCollection(Expression<Func<TSourse, bool>> predicate);
+        
         Task<TSourse> CreateElement(TKey element);
 
         Task<TSourse> UpdateElement(TKey key, TSourse element);

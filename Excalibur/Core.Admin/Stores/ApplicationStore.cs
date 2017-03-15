@@ -31,12 +31,7 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Application>> GetCollection(Func<Application, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ICollection<Application>> GetCollection(List<Func<Application, bool>> predicate)
+        public Task<ICollection<Application>> GetCollection(Expression<Func<Application, bool>> predicate)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +41,7 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public Task<Application> GetElement(Func<Application, bool> predicate)
+        public Task<Application> GetElement(Expression<Func<Application, bool>> predicate)
         {
             throw new NotImplementedException();
         }

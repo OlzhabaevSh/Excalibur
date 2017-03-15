@@ -150,22 +150,18 @@ namespace Core.Admin.Stores
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<ApplicationUser>> GetCollection(Func<ApplicationUser, bool> predicate)
+        public Task<ICollection<ApplicationUser>> GetCollection(Expression<Func<ApplicationUser, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<ApplicationUser>> GetCollection(List<Func<ApplicationUser, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<ApplicationUser> GetElement(string Key)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser> GetElement(Func<ApplicationUser, bool> predicate)
+        public Task<ApplicationUser> GetElement(Expression<Func<ApplicationUser, bool>> predicate)
         {
             throw new NotImplementedException();
         }
