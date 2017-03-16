@@ -25,28 +25,43 @@ namespace WebAPI.Admin.Controllers
         public async Task<IEnumerable<ApplicationVM>> Get()
         {
             var res = await _manager.GetCollection();
-            
-            return res.Select(app => new ApplicationVM()
+
+            if (res != null)
             {
-                Id = app.Id,
-                Name = app.Name,
-                Token = app.Token,
-                Url = app.Url
-            }).ToList();
+                return res.Select(app => new ApplicationVM()
+                {
+                    Id = app.Id,
+                    Name = app.Name,
+                    Token = app.Token,
+                    Url = app.Url
+                }).ToList();
+            }
+            else
+            {
+                return new List<ApplicationVM>();
+            }
         }
 
         // GET: api/Application/5
-        public async Task<ApplicationVM> Get(string id)
+        [ResponseType(typeof(ApplicationVM))]
+        public async Task<IHttpActionResult> Get(string id)
         {
             var res = await _manager.FindById(id);
 
-            return new ApplicationVM()
+            if (res == null)
+            {
+                return BadRequest("Element not founded!");
+            }
+
+            var response = new ApplicationVM()
             {
                 Id = res.Id,
                 Name = res.Name,
                 Token = res.Token,
                 Url = res.Url
             };
+
+            return Ok(response); 
         }
 
         // POST: api/Application
