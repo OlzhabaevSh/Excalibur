@@ -28,21 +28,21 @@ namespace WebAPI.Admin.Controllers
         }
 
         // GET: api/Application/5
-        public Task<ApplicationVM> Get(int id)
+        public Task<ApplicationVM> Get(string id)
         {
             throw new NotImplementedException();
         }
 
         // POST: api/Application
         [ResponseType(typeof(ApplicationVM))]
-        public Task<IHttpActionResult> Post([FromBody]string ApplicationVM)
+        public Task<IHttpActionResult> Post([FromBody]ApplicationVM ApplicationVM)
         {
             throw new NotImplementedException();
         }
 
         // PUT: api/Application/5
         [ResponseType(typeof(ApplicationVM))]
-        public Task<IHttpActionResult> Put(string id, [FromBody]string ApplicationVM)
+        public Task<IHttpActionResult> Put(string id, [FromBody]ApplicationVM ApplicationVM)
         {
             throw new NotImplementedException();
         }
