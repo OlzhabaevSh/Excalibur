@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Core.Admin.Stores;
 using Core.Admin.Managers;
 using Core.Interfaces;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WebAPI.Admin.App_Start
 {
@@ -46,10 +47,10 @@ namespace WebAPI.Admin.App_Start
             
             container.RegisterType<IStore<Application, string>, ApplicationStore>();
             container.RegisterType<IApplicationManagerAdmin<Application, string>, ApplicationManager>();
-            container.RegisterType<IStore<ApplicationList, int>, ApplicationListStore>();            
-
+            container.RegisterType<IStore<ApplicationList, int>, ApplicationListStore>();
+            container.RegisterType<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
             // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            // container.RegisterType<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
         }
     }
 }
