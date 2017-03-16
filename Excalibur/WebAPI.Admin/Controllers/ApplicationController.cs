@@ -13,9 +13,9 @@ namespace WebAPI.Admin.Controllers
 {
     public class ApplicationController : ApiController
     {
-        private readonly IManagerAdmin<Application> _manager;
+        private readonly IApplicationManagerAdmin<Application, string> _manager;
 
-        public ApplicationController(IManagerAdmin<Application> manager)
+        public ApplicationController(IApplicationManagerAdmin<Application, string> manager)
         {
             _manager = manager;
         }
@@ -23,13 +23,28 @@ namespace WebAPI.Admin.Controllers
         // GET: api/Application
         public Task<IEnumerable<ApplicationVM>> Get()
         {
-            throw new NotImplementedException();
+            var task = _manager.GetCollection();
+            return Task.FromResult(task.Result.Select(app => new ApplicationVM()
+            {
+                Id = app.Id,
+                Name = app.Name,
+                Token = app.Token,
+                Url = app.Url
+            }));
         }
 
         // GET: api/Application/5
-        public Task<ApplicationVM> Get(int id)
+        public Task<ApplicationVM> Get(string id)
         {
-            throw new NotImplementedException();
+            var task = _manager.FindById(id);
+            var application = task.Result;
+            return Task.FromResult(new ApplicationVM()
+            {
+                Id = application.Id,
+                Name = application.Name,
+                Token = application.Token,
+                Url = application.Url
+            });
         }
 
         // POST: api/Application
@@ -47,7 +62,10 @@ namespace WebAPI.Admin.Controllers
         // DELETE: api/Application/5
         public IHttpActionResult Delete(string id)
         {
-            throw new NotImplementedException();
+            var task = _manager.Delete(id);
+            if (task.Status == TaskStatus.Faulted)
+                return BadRequest();
+            return Ok();
         }
     }
 }
