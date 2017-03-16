@@ -1,4 +1,6 @@
 ﻿using Core.Admin.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,37 +14,69 @@ namespace WebAPI.Admin.Controllers
 {
     public class RoleController : ApiController
     {
+        private RoleManager<IdentityRole> _manager;
         // GET: api/Role
-        public Task<IEnumerable<RoleVM>> Get()
+        public async Task<IEnumerable<RoleVM>> Get()
         {
-            throw new NotImplementedException();
+            return  _manager.Roles.Select(role => new RoleVM()
+            {
+                Id = role.Id,
+                Name = role.Name
+            });
         }
 
         // GET: api/Role/5
-        public Task<RoleVM> Get(string id)
+        [ResponseType(typeof(RoleVM))]
+        public async Task<IHttpActionResult> Get(string id)
         {
-            throw new NotImplementedException();
+            var role = await _manager.FindByIdAsync(id);
+            if (role == null) return BadRequest("Element not found");
+            return Ok(new RoleVM()
+            {
+                Id = role.Id,
+                Name = role.Name
+            });
         }
 
         // POST: api/Role
         [ResponseType(typeof(RoleVM))]
-        public Task<IHttpActionResult> Post([FromBody]RoleVM value)
+        public async Task<IHttpActionResult> Post([FromBody]RoleVM value)
         {
-            throw new NotImplementedException();
+            var identityResult = _manager.Create(new IdentityRole()
+            {
+                Id = value.Id,
+                Name = value.Name
+            });
+            if (!identityResult.Succeeded) return BadRequest("Element not created");            
+            var role = await _manager.FindByNameAsync(value.Name);
+            return Ok(new RoleVM()
+            {
+                Id = role.Id,
+                Name = role.Name
+            });
         }
 
         // PUT: api/Role/5
         [ResponseType(typeof(RoleVM))]
-        public Task<IHttpActionResult> Put(string id, [FromBody]RoleVM value)
+        public async Task<IHttpActionResult> Put(string id, [FromBody]RoleVM value)
         {
-            throw new NotImplementedException();
+            var identityResult = await _manager.UpdateAsync(new IdentityRole()
+            {
+                Id = value.Id,
+                Name = value.Name
+            });
+            if (!identityResult.Succeeded) return BadRequest("Not updated");            
+            return Ok(value);
         }
 
         // DELETE: api/Role/5
         [ResponseType(typeof(bool))]
-        public Task<IHttpActionResult> Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
-            throw new NotImplementedException();
+            var role = await _manager.FindByIdAsync(id);
+            var identityResult = await _manager.DeleteAsync(role);
+            if (!identityResult.Succeeded) return BadRequest("Not deleted");
+            return Ok(identityResult.Succeeded);
         }
     }
 }
