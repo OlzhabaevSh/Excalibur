@@ -52,14 +52,32 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(ApplicationVM))]
         public Task<IHttpActionResult> Post([FromBody]ApplicationVM ApplicationVM)
         {
-            throw new NotImplementedException();
+            var task = _manager.Create(new Application()
+            {
+                Id = ApplicationVM.Id,
+                Name = ApplicationVM.Name,
+                Token = ApplicationVM.Token,
+                Url = ApplicationVM.Url
+            });
+            if (task.Status == TaskStatus.Faulted)
+                return Task.FromResult(BadRequest() as IHttpActionResult);
+            return Task.FromResult(Ok() as IHttpActionResult);
         }
 
         // PUT: api/Application/5
         [ResponseType(typeof(ApplicationVM))]
         public Task<IHttpActionResult> Put(string id, [FromBody]ApplicationVM ApplicationVM)
         {
-            throw new NotImplementedException();
+            var task = _manager.Update(new Application()
+            {
+                Id = ApplicationVM.Id,
+                Name = ApplicationVM.Name,
+                Token = ApplicationVM.Token,
+                Url = ApplicationVM.Url
+            });
+            if (task.Status == TaskStatus.Faulted)
+                return Task.FromResult(BadRequest() as IHttpActionResult);
+            return Task.FromResult(Ok() as IHttpActionResult);
         }
 
         // DELETE: api/Application/5
@@ -68,8 +86,8 @@ namespace WebAPI.Admin.Controllers
         {
             var task = _manager.Delete(id);
             if (task.Status == TaskStatus.Faulted)
-                return BadRequest();
-            return Ok();
+                return Task.FromResult(BadRequest() as IHttpActionResult);
+            return Task.FromResult(Ok() as IHttpActionResult);
         }
     }
 }

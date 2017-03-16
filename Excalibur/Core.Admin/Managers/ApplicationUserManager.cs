@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Managers
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>, IManagerAdmin<ApplicationUser>
+    public class ApplicationUserManager : UserManager<ApplicationUser>
     {
         private readonly IUserStoreAdmin _store;
         public ApplicationUserManager(IUserStoreAdmin store) : base(store)
