@@ -20,6 +20,12 @@ namespace Core.Admin.Managers
 
         public Task<Application> Create(Application entity)
         {
+            var guidToken = Guid.NewGuid().ToString();
+            var id = Guid.NewGuid().ToString();
+
+            entity.Id = id;
+            entity.Token = guidToken;
+
             return _store.CreateElement(entity);
         }
 
