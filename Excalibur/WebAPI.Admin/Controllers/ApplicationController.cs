@@ -46,7 +46,7 @@ namespace WebAPI.Admin.Controllers
                 Name = res.Name,
                 Token = res.Token,
                 Url = res.Url
-            });
+            };
         }
 
         // POST: api/Application
