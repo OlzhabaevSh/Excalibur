@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Core.Admin.Stores
 {
-    public class ApplicationListStore : IStore<ApplicationList, string>
+    public class ApplicationListStore : IStore<ApplicationList, int>
     {
 
         private readonly ApplicationDbContext _dbContext;
@@ -28,7 +28,7 @@ namespace Core.Admin.Stores
             return element;
         }
 
-        public async Task<bool> DeleteElement(string key)
+        public async Task<bool> DeleteElement(int key)
         {
             var appList = await _dbContext.ApplicationLists.FindAsync(key);
             if(appList != null)
@@ -49,7 +49,7 @@ namespace Core.Admin.Stores
             return _dbContext.ApplicationLists.Where(predicate).ToList();
         }
 
-        public Task<ApplicationList> GetElement(string Key)
+        public Task<ApplicationList> GetElement(int Key)
         {
             return _dbContext.ApplicationLists.FindAsync(Key);
         }
@@ -64,7 +64,7 @@ namespace Core.Admin.Stores
             return _dbContext.ApplicationLists.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<ApplicationList> UpdateElement(string key, ApplicationList element)
+        public async Task<ApplicationList> UpdateElement(int key, ApplicationList element)
         {
             _dbContext.ApplicationLists.Attach(element);
             _dbContext.Entry(element).State = EntityState.Modified;

@@ -103,18 +103,69 @@ namespace WebAPI.Admin.Controllers
             return Ok(true);
         }
 
+
         [HttpGet]
         [Route("Application/Detail")]
         public async Task<IEnumerable<ApplicationListVM>> GetAppDetail(string roleId = "", string userId = "")
         {
-            throw new NotImplementedException();
+            var appListCollection = await _manager.GetApplicationListCollectionByRoleAndUser(roleId, userId);
+            if (appListCollection == null) return new List<ApplicationListVM>();
+            return appListCollection.Select(appList => new ApplicationListVM()
+            {
+                Id = appList.Id,
+                Application = new ApplicationVM()
+                {
+                    Id = appList.Application.Id,
+                    Name = appList.Application.Name,
+                    Token = appList.Application.Token,
+                    Url = appList.Application.Url
+                },
+                Role = new RoleVM()
+                {
+                    Id = appList.Role.Id,
+                    Name = appList.Role.Name
+                },
+                User = new ApplicationUserVM()
+                {
+                    Id = appList.ApplicationUser.Id,
+                    Email = appList.ApplicationUser.Email,
+                    HashPwd = appList.ApplicationUser.PasswordHash,
+                    PersonInfo = appList.ApplicationUser.PersonInfo
+                }
+            });
+
         }
 
         [HttpGet]
         [Route("Application/Detail/{id}")]
-        public async Task<ApplicationListVM> GetAppItemDetail(string id)
+        [ResponseType(typeof(ApplicationListVM))]
+        public async Task<IHttpActionResult> GetAppItemDetail(int id)
         {
-            throw new NotImplementedException();
+            var appList = await _manager.GetApplicationListById(id);
+            if (appList == null) return BadRequest("Element not founded!");
+            return Ok(new ApplicationListVM()
+            {
+                Id = appList.Id,
+                Application = new ApplicationVM()
+                {
+                    Id = appList.Application.Id,
+                    Name = appList.Application.Name,
+                    Token = appList.Application.Token,
+                    Url = appList.Application.Url
+                },
+                Role = new RoleVM()
+                {
+                    Id = appList.Role.Id,
+                    Name = appList.Role.Name
+                },
+                User = new ApplicationUserVM()
+                {
+                    Id = appList.ApplicationUser.Id,
+                    Email = appList.ApplicationUser.Email,
+                    HashPwd = appList.ApplicationUser.PasswordHash,
+                    PersonInfo = appList.ApplicationUser.PersonInfo
+                }
+            });
         }
 
         [HttpPost]
@@ -122,23 +173,38 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(ApplicationListVM))]
         public async Task<IHttpActionResult> PostAppDetail([FromBody]ApplicationListVM appDetail)
         {
-            throw new NotImplementedException();
+            var appList = await _manager.CreateApplicationList(new ApplicationList()
+            {
+                Id = appDetail.Id,
+                RoleId = appDetail.Role.Id,
+                UserId = appDetail.User.Id,
+                ApplicationId = appDetail.Application.Id
+            });
+            return Ok(appList);
         }
 
         [HttpPut]
         [Route("Application/Detail/{id}")]
         [ResponseType(typeof(ApplicationListVM))]
-        public async Task<IHttpActionResult> PutAppDetail(string id, [FromBody]ApplicationListVM appDetail)
+        public async Task<IHttpActionResult> PutAppDetail(int id, [FromBody]ApplicationListVM appDetail)
         {
-            throw new NotImplementedException();
+            var appList = await _manager.UpdateApplicationList(new ApplicationList()
+            {
+                Id = appDetail.Id,
+                RoleId = appDetail.Role.Id,
+                UserId = appDetail.User.Id,
+                ApplicationId = appDetail.Application.Id
+            });
+            return Ok(appList);
         }
 
         [HttpDelete]
         [Route("Application/Detail/{id}")]
         [ResponseType(typeof(bool))]
-        public async Task<IHttpActionResult> DeleteAppDetail(string id)
+        public async Task<IHttpActionResult> DeleteAppDetail(int id)
         {
-            throw new NotImplementedException();
+            var isDeleted = await _manager.DeleteApplicationList(id);
+            return Ok(isDeleted);
         }
 
     }
