@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace WebAPI.Admin.Controllers
 {
@@ -33,19 +34,22 @@ namespace WebAPI.Admin.Controllers
         }
 
         // POST: api/Application
-        public IHttpActionResult Post([FromBody]string ApplicationVM)
+        [ResponseType(typeof(ApplicationVM))]
+        public Task<IHttpActionResult> Post([FromBody]string ApplicationVM)
         {
             throw new NotImplementedException();
         }
 
         // PUT: api/Application/5
-        public IHttpActionResult Put(string id, [FromBody]string ApplicationVM)
+        [ResponseType(typeof(ApplicationVM))]
+        public Task<IHttpActionResult> Put(string id, [FromBody]string ApplicationVM)
         {
             throw new NotImplementedException();
         }
 
         // DELETE: api/Application/5
-        public IHttpActionResult Delete(string id)
+        [ResponseType(typeof(bool))]
+        public Task<IHttpActionResult> Delete(string id)
         {
             throw new NotImplementedException();
         }
