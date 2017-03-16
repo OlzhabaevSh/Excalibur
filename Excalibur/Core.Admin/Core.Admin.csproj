@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ApplicationUserExtension.cs" />
-    <Compile Include="Interfaces\IManagerAdmin.cs" />
+    <Compile Include="Interfaces\IApplicationManagerAdmin.cs" />
     <Compile Include="Interfaces\IUserRoleStoreAdmin.cs" />
     <Compile Include="Interfaces\IUserStoreAdmin.cs" />
     <Compile Include="Managers\ApplicationManager.cs" />

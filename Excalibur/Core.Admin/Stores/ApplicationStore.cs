@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace Core.Admin.Stores
 {
-    class ApplicationStore : IStore<Application, string>
+    public class ApplicationStore : IStore<Application, string>
     {
         private readonly ApplicationDbContext _dbContext;
         public ApplicationStore(ApplicationDbContext dbContext)
