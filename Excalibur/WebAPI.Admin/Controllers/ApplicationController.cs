@@ -66,18 +66,17 @@ namespace WebAPI.Admin.Controllers
 
         // POST: api/Application
         [ResponseType(typeof(ApplicationVM))]
-        public Task<IHttpActionResult> Post([FromBody]ApplicationVM ApplicationVM)
+        public async Task<IHttpActionResult> Post([FromBody]ApplicationVM ApplicationVM)
         {
-            var task = _manager.Create(new Application()
+            var task = await _manager.Create(new Application()
             {
                 Id = ApplicationVM.Id,
                 Name = ApplicationVM.Name,
                 Token = ApplicationVM.Token,
                 Url = ApplicationVM.Url
             });
-            if (task.Status == TaskStatus.Faulted)
-                return Task.FromResult(BadRequest() as IHttpActionResult);
-            return Task.FromResult(Ok() as IHttpActionResult);
+
+            return Ok(task);
         }
 
         // PUT: api/Application/5
