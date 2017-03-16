@@ -1,39 +1,48 @@
-﻿using System;
+﻿using Core.Admin.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace WebAPI.Admin.Controllers
 {
     public class UserController : ApiController
     {
         // GET: api/User
-        public IEnumerable<string> Get()
+        public Task<IEnumerable<ApplicationUserVM>> Get()
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException();
         }
 
         // GET: api/User/5
-        public string Get(int id)
+        public Task<ApplicationUserVM> Get(string id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST: api/User
-        public void Post([FromBody]string value)
+        [ResponseType(typeof(ApplicationUserVM))]
+        public Task<IHttpActionResult> Post([FromBody]ApplicationUserVM value)
         {
+            throw new NotImplementedException();
         }
 
         // PUT: api/User/5
-        public void Put(int id, [FromBody]string value)
+        [ResponseType(typeof(ApplicationUserVM))]
+        public Task<IHttpActionResult> Put(string id, [FromBody]ApplicationUserVM value)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/User/5
-        public void Delete(int id)
+        [ResponseType(typeof(bool))]
+        public Task<IHttpActionResult> Delete(string id)
         {
+            throw new NotImplementedException();
         }
     }
 }
