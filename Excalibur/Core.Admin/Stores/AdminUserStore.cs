@@ -38,14 +38,14 @@ namespace Core.Admin.Stores
             return _dbContext.SaveChangesAsync();
         }
 
-        public Task<ApplicationUser> FindByIdAsync(string userId)
+        public async Task<ApplicationUser> FindByIdAsync(string userId)
         {
-            return Task.FromResult(_dbContext.Users.Find(userId));
+            return _dbContext.Users.Find(userId);
         }
 
-        public Task<ApplicationUser> FindByNameAsync(string userName)
+        public async Task<ApplicationUser> FindByNameAsync(string userName)
         {
-            return Task.FromResult(_dbContext.Users.FirstOrDefault(x => x.UserName.Equals(userName)));
+            return _dbContext.Users.FirstOrDefault(x => x.UserName.Equals(userName));
         }
 
         public Task UpdateAsync(ApplicationUser user)

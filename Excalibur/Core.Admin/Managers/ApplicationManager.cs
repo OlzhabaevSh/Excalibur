@@ -18,36 +18,38 @@ namespace Core.Admin.Managers
             _store = store;
         }
 
-        public Task<Application> Create(Application entity)
+        public async Task<Application> Create(Application entity)
         {
             var guidToken = Guid.NewGuid().ToString();
             var id = Guid.NewGuid().ToString();
-
             entity.Id = id;
             entity.Token = guidToken;
-
-            return _store.CreateElement(entity);
+            var application = await _store.CreateElement(entity);
+            return application;
         }
 
-        public Task<bool> Delete(string key)
+        public async Task<bool> Delete(string key)
         {
-            var task = _store.DeleteElement(key);
-            return Task.FromResult(!task.IsFaulted);
+            var isSuccess = await _store.DeleteElement(key);
+            return isSuccess;
         }        
 
-        public Task<Application> FindById(string key)
+        public async Task<Application> FindById(string key)
         {
-            return _store.GetElement(key);
+            var element = await _store.GetElement(key);
+            return element;
         }
 
-        public Task<ICollection<Application>> GetCollection()
+        public async Task<ICollection<Application>> GetCollection()
         {
-            return _store.GetCollection();
+            var applications = await _store.GetCollection();
+            return applications;
         }
 
-        public Task<Application> Update(Application entity)
+        public async Task<Application> Update(Application entity)
         {
-            return _store.UpdateElement(entity.Id, entity);
+            var element = await _store.UpdateElement(entity.Id, entity);
+            return element;
         }
 
         public void Dispose()

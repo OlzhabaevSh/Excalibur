@@ -17,40 +17,41 @@ namespace Core.Admin.Stores
         {
             _dbContext = dbContext;
         }
-        public Task<Application> CreateElement(Application element)
+
+        public async Task<Application> CreateElement(Application element)
         {
             _dbContext.Applications.Add(element);
             _dbContext.SaveChanges();
-            return Task.FromResult(element);
+            return element;
         }
 
-        public Task<bool> DeleteElement(string key)
+        public async Task<bool> DeleteElement(string key)
         {
             try
             {
                 var application = _dbContext.Applications.Find(key);
                 if(application != null)
                 {
-                    _dbContext.Applications.Remove(application);
+                     _dbContext.Applications.Remove(application);
                     _dbContext.SaveChanges();
-                    return Task.FromResult(true);
+                    return true;
                 }
-                return Task.FromResult(false);
+                return false;
             }
             catch (Exception)
             {
-                return Task.FromResult(false);
+                return false;
             }
         }
         
-        public Task<ICollection<Application>> GetCollection()
+        public async Task<ICollection<Application>> GetCollection()
         {
-            return Task.FromResult(_dbContext.Applications.ToList() as ICollection<Application>);
+            return _dbContext.Applications.ToList() as ICollection<Application>;
         }
 
-        public Task<ICollection<Application>> GetCollection(Expression<Func<Application, bool>> predicate)
+        public async Task<ICollection<Application>> GetCollection(Expression<Func<Application, bool>> predicate)
         {
-            return Task.FromResult(_dbContext.Applications.Where(predicate).ToList() as ICollection<Application>);
+            return _dbContext.Applications.Where(predicate).ToList() as ICollection<Application>;
         }
 
         public Task<Application> GetElement(string Key)
@@ -60,7 +61,7 @@ namespace Core.Admin.Stores
 
         public Task<Application> GetElement(Expression<Func<Application, bool>> predicate)
         {
-            return _dbContext.Applications.FirstOrDefaultAsync(predicate);
+            return  _dbContext.Applications.FirstOrDefaultAsync(predicate);
         }
 
         public Task<Application> GetElementByExpression(Expression<Func<Application, bool>> predicate)
@@ -68,12 +69,12 @@ namespace Core.Admin.Stores
             return _dbContext.Applications.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<Application> UpdateElement(string key, Application element)
+        public async Task<Application> UpdateElement(string key, Application element)
         {
             _dbContext.Applications.Attach(element);
             _dbContext.Entry(element).State = EntityState.Modified;
             _dbContext.SaveChanges();
-            return Task.FromResult(element);
+            return element;
         }
 
         public void Dispose()

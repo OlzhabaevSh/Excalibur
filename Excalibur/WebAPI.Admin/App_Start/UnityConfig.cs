@@ -46,6 +46,8 @@ namespace WebAPI.Admin.App_Start
             
             container.RegisterType<IStore<Application, string>, ApplicationStore>();
             container.RegisterType<IApplicationManagerAdmin<Application, string>, ApplicationManager>();
+            container.RegisterType<IStore<ApplicationList, string>, ApplicationListStore>();            
+
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
         }
