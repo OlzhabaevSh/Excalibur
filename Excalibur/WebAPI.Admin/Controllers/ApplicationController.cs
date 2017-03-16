@@ -22,29 +22,30 @@ namespace WebAPI.Admin.Controllers
         }
 
         // GET: api/Application
-        public Task<IEnumerable<ApplicationVM>> Get()
+        public async Task<IEnumerable<ApplicationVM>> Get()
         {
-            var task = _manager.GetCollection();
-            return Task.FromResult(task.Result.Select(app => new ApplicationVM()
+            var res = await _manager.GetCollection();
+            
+            return res.Select(app => new ApplicationVM()
             {
                 Id = app.Id,
                 Name = app.Name,
                 Token = app.Token,
                 Url = app.Url
-            }));
+            }).ToList();
         }
 
         // GET: api/Application/5
-        public Task<ApplicationVM> Get(string id)
+        public async Task<ApplicationVM> Get(string id)
         {
-            var task = _manager.FindById(id);
-            var application = task.Result;
-            return Task.FromResult(new ApplicationVM()
+            var res = await _manager.FindById(id);
+
+            return new ApplicationVM()
             {
-                Id = application.Id,
-                Name = application.Name,
-                Token = application.Token,
-                Url = application.Url
+                Id = res.Id,
+                Name = res.Name,
+                Token = res.Token,
+                Url = res.Url
             });
         }
 
@@ -66,28 +67,65 @@ namespace WebAPI.Admin.Controllers
 
         // PUT: api/Application/5
         [ResponseType(typeof(ApplicationVM))]
-        public Task<IHttpActionResult> Put(string id, [FromBody]ApplicationVM ApplicationVM)
+        public async Task<IHttpActionResult> Put(string id, [FromBody]ApplicationVM ApplicationVM)
         {
-            var task = _manager.Update(new Application()
+            var res = await _manager.Update(new Application()
             {
                 Id = ApplicationVM.Id,
                 Name = ApplicationVM.Name,
                 Token = ApplicationVM.Token,
                 Url = ApplicationVM.Url
             });
-            if (task.Status == TaskStatus.Faulted)
-                return Task.FromResult(BadRequest() as IHttpActionResult);
-            return Task.FromResult(Ok() as IHttpActionResult);
+
+            return Ok(res);
         }
 
         // DELETE: api/Application/5
         [ResponseType(typeof(bool))]
-        public Task<IHttpActionResult> Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
-            var task = _manager.Delete(id);
-            if (task.Status == TaskStatus.Faulted)
-                return Task.FromResult(BadRequest() as IHttpActionResult);
-            return Task.FromResult(Ok() as IHttpActionResult);
+            var res = await _manager.Delete(id);
+
+            return Ok(true);
         }
+
+        [HttpGet]
+        [Route("Detail")]
+        public async Task<IEnumerable<ApplicationListVM>> GetAppDetail(string roleId = "", string userId = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("Detail")]
+        public async Task<ApplicationListVM> GetAppItemDetail(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [Route("Detail")]
+        [ResponseType(typeof(ApplicationListVM))]
+        public async Task<IHttpActionResult> PostAppDetail([FromBody]ApplicationListVM appDetail)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPut]
+        [Route("Detail")]
+        [ResponseType(typeof(ApplicationListVM))]
+        public async Task<IHttpActionResult> PutAppDetail(string id, [FromBody]ApplicationListVM appDetail)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete]
+        [Route("Detail")]
+        [ResponseType(typeof(bool))]
+        public async Task<IHttpActionResult> DeleteAppDetail(string id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
