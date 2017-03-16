@@ -90,21 +90,21 @@ namespace WebAPI.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Detail")]
+        [Route("Application/Detail")]
         public async Task<IEnumerable<ApplicationListVM>> GetAppDetail(string roleId = "", string userId = "")
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
-        [Route("Detail")]
+        [Route("Application/Detail/{id}")]
         public async Task<ApplicationListVM> GetAppItemDetail(string id)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        [Route("Detail")]
+        [Route("Application/Detail")]
         [ResponseType(typeof(ApplicationListVM))]
         public async Task<IHttpActionResult> PostAppDetail([FromBody]ApplicationListVM appDetail)
         {
@@ -112,7 +112,7 @@ namespace WebAPI.Admin.Controllers
         }
 
         [HttpPut]
-        [Route("Detail")]
+        [Route("Application/Detail/{id}")]
         [ResponseType(typeof(ApplicationListVM))]
         public async Task<IHttpActionResult> PutAppDetail(string id, [FromBody]ApplicationListVM appDetail)
         {
@@ -120,7 +120,7 @@ namespace WebAPI.Admin.Controllers
         }
 
         [HttpDelete]
-        [Route("Detail")]
+        [Route("Application/Detail/{id}")]
         [ResponseType(typeof(bool))]
         public async Task<IHttpActionResult> DeleteAppDetail(string id)
         {
