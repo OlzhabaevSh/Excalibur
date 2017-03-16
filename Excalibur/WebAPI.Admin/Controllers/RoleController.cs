@@ -15,6 +15,12 @@ namespace WebAPI.Admin.Controllers
     public class RoleController : ApiController
     {
         private RoleManager<IdentityRole> _manager;
+
+        public RoleController(RoleManager<IdentityRole> manager)
+        {
+            _manager = manager;
+        }
+
         // GET: api/Role
         public async Task<IEnumerable<RoleVM>> Get()
         {
