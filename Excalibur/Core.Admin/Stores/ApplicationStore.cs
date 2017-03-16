@@ -45,12 +45,12 @@ namespace Core.Admin.Stores
         
         public Task<ICollection<Application>> GetCollection()
         {
-            return Task.FromResult(_dbContext.Applications as ICollection<Application>);
+            return Task.FromResult(_dbContext.Applications.ToList() as ICollection<Application>);
         }
 
         public Task<ICollection<Application>> GetCollection(Expression<Func<Application, bool>> predicate)
         {
-            return Task.FromResult(_dbContext.Applications.Where(predicate) as ICollection<Application>);
+            return Task.FromResult(_dbContext.Applications.Where(predicate).ToList() as ICollection<Application>);
         }
 
         public Task<Application> GetElement(string Key)
