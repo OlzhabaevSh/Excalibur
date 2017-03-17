@@ -15,7 +15,8 @@ namespace Core.Admin.Interfaces
 
         Task<TSource> Create(TSource entity);
 
-        Task<bool> Delete(TKey key);
+        Task<bool> DeleteAsync(TKey key);
+        Task<ICollection<string>> DeleteAsync(string[] roleIds);
 
         Task<TSource> Update(TSource entity);
 
@@ -28,5 +29,7 @@ namespace Core.Admin.Interfaces
         Task<ApplicationList> UpdateApplicationList(ApplicationList appList);
 
         Task<bool> DeleteApplicationList(int appListId);
+
+        Task<ICollection<int>> DeleteApplicationListCollection(int[] appListIds);
     }
 }

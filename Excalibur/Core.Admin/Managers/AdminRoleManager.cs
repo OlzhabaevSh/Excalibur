@@ -36,6 +36,12 @@ namespace Core.Admin.Managers
             return isDeleted;
         }
 
+        public async Task<ICollection<string>> DeleteAsync(string[] roleIds)
+        {
+            var roleList = await _store.DeleteCollection(roleIds);
+            return roleList;
+        }
+
         public async Task<ApplicationRoles> FindByIdAsync(string roleId)
         {
             var role = await _store.GetElement(roleId);
@@ -100,6 +106,6 @@ namespace Core.Admin.Managers
         {
             var roleUpdated = await _store.UpdateElement(role.Id, role);
             return roleUpdated;
-        }
+        }        
     }
 }

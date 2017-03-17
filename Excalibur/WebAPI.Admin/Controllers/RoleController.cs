@@ -17,9 +17,9 @@ namespace WebAPI.Admin.Controllers
 {
     public class RoleController : ApiController
     {
-        private AdminRoleManager _manager;
+        private IAdminRoleManager _manager;
 
-        public RoleController(AdminRoleManager manager)
+        public RoleController(IAdminRoleManager manager)
         {
             _manager = manager;
         }
@@ -125,6 +125,15 @@ namespace WebAPI.Admin.Controllers
             var isDeleted = await _manager.DeleteAsync(role);
             if (!isDeleted) return BadRequest("Not deleted");
             return Ok(isDeleted);
+        }
+
+        // DELETE: api/Role/5
+        [HttpDelete]
+        [ResponseType(typeof(IEnumerable<string>))]
+        public async Task<IHttpActionResult> Delete(string[] ids)
+        {
+            var roleList = await _manager.DeleteAsync(ids);
+            return Ok(roleList);
         }
     }
 }

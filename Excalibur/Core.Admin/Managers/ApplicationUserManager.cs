@@ -52,6 +52,12 @@ namespace Core.Admin.Managers
         public override Task<ApplicationUser> FindByIdAsync(string userId)
         {
             return _store.FindByIdAsync(userId);
-        }        
+        }
+
+        public async Task<ICollection<string>> Delete(string[] userIds)
+        {
+            var users = await _store.DeleteCollection(userIds);
+            return users;
+        }
     }
 }
