@@ -75,9 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ApplicationUserExtension.cs" />
+    <Compile Include="Interfaces\IAdminRoleManager.cs" />
+    <Compile Include="Interfaces\IAdminRoleStore.cs" />
     <Compile Include="Interfaces\IApplicationManagerAdmin.cs" />
     <Compile Include="Interfaces\IUserRoleStoreAdmin.cs" />
     <Compile Include="Interfaces\IUserStoreAdmin.cs" />
+    <Compile Include="Managers\AdminRoleManager.cs" />
     <Compile Include="Managers\ApplicationManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="Migrations\201703140842251_init.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Models\ApplicationRoles.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stores\AdminRoleStore.cs" />
     <Compile Include="Stores\AdminUserStore.cs" />
     <Compile Include="Stores\ApplicationListStore.cs" />
     <Compile Include="Stores\ApplicationStore.cs" />

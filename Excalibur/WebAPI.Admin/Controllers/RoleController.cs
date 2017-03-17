@@ -1,4 +1,6 @@
-﻿using Core.Admin.ViewModels;
+﻿using Core.Admin.Interfaces;
+using Core.Admin.Managers;
+using Core.Admin.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -14,9 +16,9 @@ namespace WebAPI.Admin.Controllers
 {
     public class RoleController : ApiController
     {
-        private RoleManager<IdentityRole> _manager;
+        private AdminRoleManager _manager;
 
-        public RoleController(RoleManager<IdentityRole> manager)
+        public RoleController(AdminRoleManager manager)
         {
             _manager = manager;
         }
@@ -24,7 +26,8 @@ namespace WebAPI.Admin.Controllers
         // GET: api/Role
         public async Task<IEnumerable<RoleVM>> Get()
         {
-            return  _manager.Roles.Select(role => new RoleVM()
+            var roles = await _manager.Get();
+            return  roles.Select(role => new RoleVM()
             {
                 Id = role.Id,
                 Name = role.Name
@@ -48,13 +51,12 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(RoleVM))]
         public async Task<IHttpActionResult> Post([FromBody]RoleVM value)
         {
-            var identityResult = _manager.Create(new IdentityRole()
+            var role = await _manager.CreateAsync(new IdentityRole()
             {
                 Id = value.Id,
                 Name = value.Name
             });
-            if (!identityResult.Succeeded) return BadRequest("Element not created");            
-            var role = await _manager.FindByNameAsync(value.Name);
+            if (role == null) return BadRequest("Element not created");                        
             return Ok(new RoleVM()
             {
                 Id = role.Id,
@@ -66,13 +68,12 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(RoleVM))]
         public async Task<IHttpActionResult> Put(string id, [FromBody]RoleVM value)
         {
-            var identityResult = await _manager.UpdateAsync(new IdentityRole()
+            var role = await _manager.UpdateAsync(new IdentityRole()
             {
                 Id = value.Id,
                 Name = value.Name
-            });
-            if (!identityResult.Succeeded) return BadRequest("Not updated");            
-            return Ok(value);
+            });                     
+            return Ok(role);
         }
 
         // DELETE: api/Role/5
@@ -80,9 +81,9 @@ namespace WebAPI.Admin.Controllers
         public async Task<IHttpActionResult> Delete(string id)
         {
             var role = await _manager.FindByIdAsync(id);
-            var identityResult = await _manager.DeleteAsync(role);
-            if (!identityResult.Succeeded) return BadRequest("Not deleted");
-            return Ok(identityResult.Succeeded);
+            var isDeleted = await _manager.DeleteAsync(role);
+            if (!isDeleted) return BadRequest("Not deleted");
+            return Ok(isDeleted);
         }
     }
 }

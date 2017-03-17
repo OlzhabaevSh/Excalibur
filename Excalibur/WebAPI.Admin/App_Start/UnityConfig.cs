@@ -48,9 +48,10 @@ namespace WebAPI.Admin.App_Start
             container.RegisterType<IStore<Application, string>, ApplicationStore>();
             container.RegisterType<IApplicationManagerAdmin<Application, string>, ApplicationManager>();
             container.RegisterType<IStore<ApplicationList, int>, ApplicationListStore>();
-            container.RegisterType<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
+            container.RegisterType<IAdminRoleStore, AdminRoleStore>();
+            container.RegisterType<IAdminRoleManager, AdminRoleManager>();
             // TODO: Register your types here
-            // container.RegisterType<RoleManager<IdentityRole>, RoleManager<IdentityRole>>();
+            // container.RegisterType<IAdminRoleStore, AdminRoleStore>();
         }
     }
 }
