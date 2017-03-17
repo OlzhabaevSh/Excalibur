@@ -38,22 +38,22 @@ namespace Core.Admin.Stores
 
         public async Task<ICollection<ApplicationRoles>> GetCollection()
         {
-            return _dbContext.Roles.ToList();
+            return _dbContext.IdentityRoles.ToList();
         }
 
         public async Task<ICollection<ApplicationRoles>> GetCollection(Expression<Func<ApplicationRoles, bool>> predicate)
         {
-            return _dbContext.Roles.Where(predicate).ToList();
+            return _dbContext.IdentityRoles.Where(predicate).ToList();
         }
 
         public async Task<ApplicationRoles> GetElement(string Key)
         {
-            return _dbContext.Roles.Include(x => x.Applications).FirstOrDefault(x => x.Id == Key);
+            return _dbContext.IdentityRoles.Include(x => x.Applications).FirstOrDefault(x => x.Id == Key);
         }
 
         public async Task<ApplicationRoles> GetElement(Expression<Func<ApplicationRoles, bool>> predicate)
         {
-            return _dbContext.Roles.FirstOrDefault(predicate);
+            return _dbContext.IdentityRoles.FirstOrDefault(predicate);
         }
 
         public async Task<ApplicationRoles> UpdateElement(string key, ApplicationRoles element)
