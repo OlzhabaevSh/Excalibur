@@ -48,8 +48,6 @@ namespace WebAPI.Admin
             cntr.RegisterInstance<ApplicationUserManager>(manager);
 
             return manager;
-        }
-
-
+        }     
     }
 }
