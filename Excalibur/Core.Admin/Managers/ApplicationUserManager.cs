@@ -30,7 +30,7 @@ namespace Core.Admin.Managers
 
         public override Task<ApplicationUser> FindAsync(string userName, string password)
         {
-            var user = _store.GetElementByExpression(x => x.Email == userName && x.PasswordHash == password);
+            var user = _store.GetElement(x => x.Email == userName && x.PasswordHash == password);
 
             return user;
         }

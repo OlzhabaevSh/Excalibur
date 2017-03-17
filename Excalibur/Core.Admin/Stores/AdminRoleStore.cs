@@ -68,5 +68,10 @@ namespace Core.Admin.Stores
         {
             _dbContext.Dispose();
         }
+
+        public Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -172,6 +172,11 @@ namespace Core.Admin.Stores
             user.Id = identityUser.Id;
             user.UserName = identityUser.UserName;
         }
+
+        public Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

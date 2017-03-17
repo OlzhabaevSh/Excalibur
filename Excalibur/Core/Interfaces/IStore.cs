@@ -22,5 +22,7 @@ namespace Core.Interfaces
         Task<TSourse> UpdateElement(TKey key, TSourse element);
 
         Task<bool> DeleteElement(TKey key);
+
+        Task<ICollection<TKey>> DeleteCollection(ICollection<TKey> deleteCollection);
     }
 }
