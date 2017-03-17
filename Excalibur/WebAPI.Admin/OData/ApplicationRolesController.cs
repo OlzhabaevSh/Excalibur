@@ -91,6 +91,8 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
+            applicationRoles.Id = Guid.NewGuid().ToString();
+
             db.IdentityRoles.Add(applicationRoles);
 
             try

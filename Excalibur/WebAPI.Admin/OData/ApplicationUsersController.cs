@@ -93,6 +93,7 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
+            applicationUser.Id = Guid.NewGuid().ToString();
             db.Users.Add(applicationUser);
 
             try
