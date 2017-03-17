@@ -13,6 +13,7 @@ namespace Core.Admin.Interfaces
     {
         Task<ApplicationRoles> CreateAsync(ApplicationRoles role);
         Task<bool> DeleteAsync(ApplicationRoles role);
+        Task<ICollection<string>> DeleteAsync(string[] roleIds);
         Task<ApplicationRoles> FindByIdAsync(string roleId);
         Task<ApplicationRoles> FindByNameAsync(string roleName);
         Task<ApplicationRoles> UpdateAsync(ApplicationRoles role);
@@ -20,5 +21,7 @@ namespace Core.Admin.Interfaces
         Task<ApplicationRoles> RemoveFromApplication(string roleId, string applicationId);
         Task<ICollection<ApplicationRoles>> Get();
         Task<ICollection<ApplicationRoles>> GetByApplication(string applicationId);
+        
+
     }
 }

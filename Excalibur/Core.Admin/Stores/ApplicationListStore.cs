@@ -77,9 +77,12 @@ namespace Core.Admin.Stores
             _dbContext.Dispose();
         }
 
-        public Task<ICollection<int>> DeleteCollection(ICollection<int> deleteCollection)
+        public async Task<ICollection<int>> DeleteCollection(ICollection<int> deleteCollection)
         {
-            throw new NotImplementedException();
+            var appListCollection = _dbContext.ApplicationLists.Where(aL => deleteCollection.Contains(aL.Id));
+            _dbContext.ApplicationLists.RemoveRange(appListCollection);
+            _dbContext.SaveChanges();
+            return appListCollection.Select(aL => aL.Id).ToList();
         }
     }
 }

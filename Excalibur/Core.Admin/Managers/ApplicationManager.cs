@@ -33,7 +33,7 @@ namespace Core.Admin.Managers
             return application;
         }
 
-        public async Task<bool> Delete(string key)
+        public async Task<bool> DeleteAsync(string key)
         {
             var isSuccess = await _applicationStore.DeleteElement(key);
             return isSuccess;
@@ -55,6 +55,12 @@ namespace Core.Admin.Managers
         {
             var element = await _applicationStore.UpdateElement(entity.Id, entity);
             return element;
+        }
+
+        public async Task<ICollection<string>> DeleteAsync(string[] roleIds)
+        {
+            var appList = await _applicationStore.DeleteCollection(roleIds);
+            return appList;
         }
         #endregion
         #region ApplicationList
@@ -102,6 +108,12 @@ namespace Core.Admin.Managers
         {
             var isDeleted = await _applicationListStore.DeleteElement(appListId);
             return isDeleted;
+        }
+
+        public async Task<ICollection<int>> DeleteApplicationListCollection(int[] appListIds)
+        {
+            var appList = await _applicationListStore.DeleteCollection(appListIds);
+            return appList;
         }
         #endregion
 

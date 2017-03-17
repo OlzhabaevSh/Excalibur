@@ -98,11 +98,18 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(bool))]
         public async Task<IHttpActionResult> Delete(string id)
         {
-            var res = await _manager.Delete(id);
+            var res = await _manager.DeleteAsync(id);
 
             return Ok(true);
         }
 
+        // DELETE: api/Application/5
+        [ResponseType(typeof(IEnumerable<string>))]
+        public async Task<IHttpActionResult> Delete(string[] ids)
+        {
+            var res = await _manager.DeleteAsync(ids);
+            return Ok(true);
+        }
 
         [HttpGet]
         [Route("Application/Detail")]
@@ -133,7 +140,6 @@ namespace WebAPI.Admin.Controllers
                     PersonInfo = appList.ApplicationUser.PersonInfo
                 }
             });
-
         }
 
         [HttpGet]
@@ -207,5 +213,13 @@ namespace WebAPI.Admin.Controllers
             return Ok(isDeleted);
         }
 
+        [HttpDelete]
+        [Route("Application/Detail/{id}")]
+        [ResponseType(typeof(IEnumerable<int>))]
+        public async Task<IHttpActionResult> DeleteAppDetail(int[] id)
+        {
+            var appDetailList = await _manager.DeleteApplicationListCollection(id);
+            return Ok(appDetailList);
+        }
     }
 }

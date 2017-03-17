@@ -116,6 +116,17 @@ namespace Core.Admin.Stores
 
         #region Core.Interface.IStore
 
+        public async Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
+        {
+            var userList = _dbContext.Users.Where(u=> deleteCollection.Contains(u.Id));
+            foreach (var user in userList)
+            {
+                _dbContext.Users.Remove(user);
+            }
+            _dbContext.SaveChanges();
+            return userList.Select(u => u.Id).ToList();
+        }
+
         public Task<bool> DeleteElement(string key)
         {
             throw new NotImplementedException();
@@ -171,12 +182,7 @@ namespace Core.Admin.Stores
             user.PasswordHash = identityUser.PasswordHash;
             user.Id = identityUser.Id;
             user.UserName = identityUser.UserName;
-        }
-
-        public Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
-        {
-            throw new NotImplementedException();
-        }
+        }        
         #endregion
     }
 }

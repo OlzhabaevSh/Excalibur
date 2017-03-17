@@ -69,9 +69,15 @@ namespace Core.Admin.Stores
             _dbContext.Dispose();
         }
 
-        public Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
+        public async Task<ICollection<string>> DeleteCollection(ICollection<string> deleteCollection)
         {
-            throw new NotImplementedException();
+            var roleList = _dbContext.Roles.Where(r => deleteCollection.Contains(r.Id));
+            foreach (var r in roleList)
+            {
+                _dbContext.Roles.Remove(r);
+            }
+            _dbContext.SaveChanges();
+            return roleList.Select(r=> r.Id).ToList();
         }
     }
 }

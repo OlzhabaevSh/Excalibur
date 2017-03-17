@@ -99,16 +99,29 @@ namespace WebAPI.Admin.Controllers
 
         // PUT: api/User/5
         [ResponseType(typeof(ApplicationUserVM))]
-        public Task<IHttpActionResult> Put(string id, [FromBody]ApplicationUserVM value)
+        public async Task<IHttpActionResult> Put(string id, [FromBody]ApplicationUserVM value)
         {
-            throw new NotImplementedException();
+            var identityResult = await _userManager.UpdateAsync(new ApplicationUser()
+            {
+                PersonInfo = value.PersonInfo
+            });
+            return Ok(value);
         }
 
         // DELETE: api/User/5
         [ResponseType(typeof(bool))]
-        public Task<IHttpActionResult> Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
-            throw new NotImplementedException();
+            var appUser = await _userManager.FindByIdAsync(id);
+            var identityResult = await _userManager.DeleteAsync(appUser);            
+            return Ok(identityResult.Succeeded);
+        }
+
+        [ResponseType(typeof(IEnumerable<string>))]
+        public async Task<IHttpActionResult> Delete(string[] ids)
+        {
+            var idList = await _userManager.Delete(ids);            
+            return Ok(idList);
         }
     }
 }
