@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Admin.Models;
+using Core.Interfaces;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Interfaces
 {
-    public interface IAdminRoleStore : IStore<IdentityRole, string>
+    public interface IAdminRoleStore : IStore<ApplicationRoles, string>
     {
     }
 }

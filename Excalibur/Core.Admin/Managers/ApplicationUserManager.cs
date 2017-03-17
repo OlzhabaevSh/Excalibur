@@ -15,7 +15,7 @@ namespace Core.Admin.Managers
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        private readonly ApplicationUserManager _userManager;
+        private readonly IUserStoreAdmin _store;
         public ApplicationUserManager(IUserStoreAdmin store) : base(store)
         {
             _store = store;

@@ -22,7 +22,7 @@ namespace Core.Admin.Models
 
         [ForeignKey("Role")]
         public string RoleId { get; set; }
-        public virtual IdentityRole Role { get; set; }
+        public virtual ApplicationRoles Role { get; set; }
 
 
     }

@@ -13,7 +13,9 @@ namespace Core.Admin.Models
         public virtual DbSet<ApplicationList> ApplicationLists { get; set; }
 
         public virtual DbSet<Application> Applications { get; set; }
-        
+
+        public virtual IDbSet<ApplicationRoles> Roles { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

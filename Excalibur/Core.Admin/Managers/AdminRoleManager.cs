@@ -1,4 +1,5 @@
 ﻿using Core.Admin.Interfaces;
+using Core.Admin.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -18,44 +19,44 @@ namespace Core.Admin.Managers
             _store = store;
         }
 
-        public async Task<IdentityRole> CreateAsync(IdentityRole role)
+        public async Task<ApplicationRoles> CreateAsync(ApplicationRoles role)
         {
             role.Id = Guid.NewGuid().ToString();
             var newRole = await _store.CreateElement(role);
             return newRole;
         }
 
-        public async Task<bool> DeleteAsync(IdentityRole role)
+        public async Task<bool> DeleteAsync(ApplicationRoles role)
         {
             var isDeleted = await _store.DeleteElement(role.Id);
             return isDeleted;
         }
 
-        public async Task<IdentityRole> FindByIdAsync(string roleId)
+        public async Task<ApplicationRoles> FindByIdAsync(string roleId)
         {
             var role = await _store.GetElement(roleId);
             return role;
         }
 
-        public async Task<IdentityRole> FindByNameAsync(string roleName)
+        public async Task<ApplicationRoles> FindByNameAsync(string roleName)
         {
             var role = await _store.GetElement(r=> r.Name.Equals(roleName));
             return role;
         }
 
-        public async Task<IdentityRole> Get(IdentityRole role)
+        public async Task<ApplicationRoles> Get(ApplicationRoles role)
         {
             var res = await _store.GetElement(r => r.Name.Equals(role.Name) && r.Id.Equals(role.Id));
             return role;
         }
 
-        public async Task<ICollection<IdentityRole>> Get()
+        public async Task<ICollection<ApplicationRoles>> Get()
         {
             var roleList = await _store.GetCollection();
             return roleList;
         }
 
-        public async Task<IdentityRole> UpdateAsync(IdentityRole role)
+        public async Task<ApplicationRoles> UpdateAsync(ApplicationRoles role)
         {
             var roleUpdated = await _store.UpdateElement(role.Id, role);
             return roleUpdated;

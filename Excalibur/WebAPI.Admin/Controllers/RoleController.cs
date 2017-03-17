@@ -1,5 +1,6 @@
 ﻿using Core.Admin.Interfaces;
 using Core.Admin.Managers;
+using Core.Admin.Models;
 using Core.Admin.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -51,7 +52,7 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(RoleVM))]
         public async Task<IHttpActionResult> Post([FromBody]RoleVM value)
         {
-            var role = await _manager.CreateAsync(new IdentityRole()
+            var role = await _manager.CreateAsync(new ApplicationRoles()
             {
                 Id = value.Id,
                 Name = value.Name
@@ -68,7 +69,7 @@ namespace WebAPI.Admin.Controllers
         [ResponseType(typeof(RoleVM))]
         public async Task<IHttpActionResult> Put(string id, [FromBody]RoleVM value)
         {
-            var role = await _manager.UpdateAsync(new IdentityRole()
+            var role = await _manager.UpdateAsync(new ApplicationRoles()
             {
                 Id = value.Id,
                 Name = value.Name

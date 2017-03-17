@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace Core.Admin.Models
         public string Url { get; set; }
 
         public string Token { get; set; }
+
+        public virtual ICollection<ApplicationRoles> Roles { get; set; }
 
         public virtual ICollection<ApplicationList> ApplicationList { get; set; }
     }

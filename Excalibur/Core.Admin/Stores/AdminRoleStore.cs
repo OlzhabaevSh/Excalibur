@@ -20,7 +20,7 @@ namespace Core.Admin.Stores
             _dbContext = dbContext;
         }
 
-        public async Task<IdentityRole> CreateElement(IdentityRole element)
+        public async Task<ApplicationRoles> CreateElement(ApplicationRoles element)
         {
             _dbContext.Roles.Add(element);
             var res = await _dbContext.SaveChangesAsync();
@@ -36,32 +36,32 @@ namespace Core.Admin.Stores
             return true;
         }       
 
-        public async Task<ICollection<IdentityRole>> GetCollection()
+        public async Task<ICollection<ApplicationRoles>> GetCollection()
         {
             return _dbContext.Roles.ToList();
         }
 
-        public async Task<ICollection<IdentityRole>> GetCollection(Expression<Func<IdentityRole, bool>> predicate)
+        public async Task<ICollection<ApplicationRoles>> GetCollection(Expression<Func<ApplicationRoles, bool>> predicate)
         {
             return _dbContext.Roles.Where(predicate).ToList();
         }
 
-        public async Task<IdentityRole> GetElement(string Key)
+        public async Task<ApplicationRoles> GetElement(string Key)
         {
             return _dbContext.Roles.Find(Key);
         }
 
-        public async Task<IdentityRole> GetElement(Expression<Func<IdentityRole, bool>> predicate)
+        public async Task<ApplicationRoles> GetElement(Expression<Func<ApplicationRoles, bool>> predicate)
         {
             return _dbContext.Roles.FirstOrDefault(predicate);
         }
 
-        public async Task<IdentityRole> GetElementByExpression(Expression<Func<IdentityRole, bool>> predicate)
+        public async Task<ApplicationRoles> GetElementByExpression(Expression<Func<ApplicationRoles, bool>> predicate)
         {
             return _dbContext.Roles.FirstOrDefault(predicate);
         }
 
-        public async Task<IdentityRole> UpdateElement(string key, IdentityRole element)
+        public async Task<ApplicationRoles> UpdateElement(string key, ApplicationRoles element)
         {
             _dbContext.Roles.Attach(element);
             _dbContext.Entry(element).State = EntityState.Modified;
