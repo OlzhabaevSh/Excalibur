@@ -19,8 +19,6 @@ namespace Core.Admin.Interfaces
 
         Task<TSource> Update(TSource entity);
 
-
-
         Task<ICollection<ApplicationList>> GetApplicationListCollectionByRoleAndUser(string roleKey, string userKey);
 
         Task<ApplicationList> GetApplicationListById(int appListId);

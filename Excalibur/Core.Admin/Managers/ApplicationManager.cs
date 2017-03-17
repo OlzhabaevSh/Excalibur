@@ -60,7 +60,23 @@ namespace Core.Admin.Managers
         #region ApplicationList
         public async Task<ICollection<ApplicationList>> GetApplicationListCollectionByRoleAndUser(string roleKey, string userKey)
         {
-            var applicationLists = await _applicationListStore.GetCollection(appList => appList.RoleId.Equals(roleKey) && appList.UserId.Equals(userKey));
+            ICollection<ApplicationList> applicationLists = new List<ApplicationList>();
+            if(!string.IsNullOrEmpty(roleKey) && !string.IsNullOrEmpty(userKey))
+            {
+                applicationLists = await _applicationListStore.GetCollection(appList => appList.RoleId.Equals(roleKey) && appList.UserId.Equals(userKey));
+            }
+            else if(!string.IsNullOrEmpty(roleKey) && string.IsNullOrEmpty(userKey))
+            {
+                applicationLists = await _applicationListStore.GetCollection(appList => appList.RoleId.Equals(roleKey));
+            }
+            else if (string.IsNullOrEmpty(roleKey) && !string.IsNullOrEmpty(userKey))
+            {
+                applicationLists = await _applicationListStore.GetCollection(appList => appList.UserId.Equals(userKey));
+            }
+            else
+            {
+                applicationLists = await _applicationListStore.GetCollection();
+            }
             return applicationLists;
         }
 
