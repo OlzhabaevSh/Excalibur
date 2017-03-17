@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201703171105524_updateId.Designer.cs">
       <DependentUpon>201703171105524_updateId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703171113592_updateIdBack.cs" />
+    <Compile Include="Migrations\201703171113592_updateIdBack.Designer.cs">
+      <DependentUpon>201703171113592_updateIdBack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -133,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703171105524_updateId.resx">
       <DependentUpon>201703171105524_updateId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703171113592_updateIdBack.resx">
+      <DependentUpon>201703171113592_updateIdBack.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

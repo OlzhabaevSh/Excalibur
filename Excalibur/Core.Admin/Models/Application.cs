@@ -11,7 +11,7 @@ namespace Core.Admin.Models
 {
     public class Application
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public string Id { get; set; }
 
         public string Name { get; set; }

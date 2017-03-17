@@ -91,6 +91,7 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
+            application.Id = Guid.NewGuid().ToString();
             db.Applications.Add(application);
 
             try
