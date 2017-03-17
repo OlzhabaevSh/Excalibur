@@ -28,7 +28,29 @@ namespace WebAPI.Admin.Controllers
         public async Task<IEnumerable<RoleVM>> Get()
         {
             var roles = await _manager.Get();
+
             return  roles.Select(role => new RoleVM()
+            {
+                Id = role.Id,
+                Name = role.Name
+            });
+        }
+
+        [Route("api/Role/Application/{id}")]
+        public async Task<IEnumerable<RoleVM>> GetByApplication(string id = "")
+        {
+            ICollection<ApplicationRoles> roles = null;
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                roles = await _manager.GetByApplication(id);
+            }
+            else
+            {
+                roles = await _manager.Get();
+            }
+
+            return roles.Select(role => new RoleVM()
             {
                 Id = role.Id,
                 Name = role.Name
@@ -74,6 +96,24 @@ namespace WebAPI.Admin.Controllers
                 Id = value.Id,
                 Name = value.Name
             });                     
+            return Ok(role);
+        }
+
+        [Route("api/Role/Application/{id}")]
+        [HttpPut]
+        [ResponseType(typeof(RoleVM))]
+        public async Task<IHttpActionResult> PutApplication(string id, [FromBody]ApplicationVM value)
+        {
+            var role = await _manager.AddToApplication(id, value.Id);
+            return Ok(role);
+        }
+
+        [Route("api/Role/Application/{id}")]
+        [HttpDelete]
+        [ResponseType(typeof(RoleVM))]
+        public async Task<IHttpActionResult> DeleteApplication(string id, [FromBody]ApplicationVM value)
+        {
+            var role = await _manager.RemoveFromApplication(id, value.Id);
             return Ok(role);
         }
 

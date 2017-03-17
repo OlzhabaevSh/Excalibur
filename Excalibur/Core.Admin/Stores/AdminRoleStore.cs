@@ -48,15 +48,10 @@ namespace Core.Admin.Stores
 
         public async Task<ApplicationRoles> GetElement(string Key)
         {
-            return _dbContext.Roles.Find(Key);
+            return _dbContext.Roles.Include(x => x.Applications).FirstOrDefault(x => x.Id == Key);
         }
 
         public async Task<ApplicationRoles> GetElement(Expression<Func<ApplicationRoles, bool>> predicate)
-        {
-            return _dbContext.Roles.FirstOrDefault(predicate);
-        }
-
-        public async Task<ApplicationRoles> GetElementByExpression(Expression<Func<ApplicationRoles, bool>> predicate)
         {
             return _dbContext.Roles.FirstOrDefault(predicate);
         }

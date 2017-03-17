@@ -1,5 +1,6 @@
 ﻿using Core.Admin.Interfaces;
 using Core.Admin.Models;
+using Core.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -14,9 +15,12 @@ namespace Core.Admin.Managers
     {
         private readonly IAdminRoleStore _store;
 
-        public AdminRoleManager(IAdminRoleStore store)
+        private readonly IStore<Application, string> _storeApplications;
+
+        public AdminRoleManager(IAdminRoleStore store, IStore<Application, string> storeApplications)
         {
             _store = store;
+            _storeApplications = storeApplications;
         }
 
         public async Task<ApplicationRoles> CreateAsync(ApplicationRoles role)
@@ -44,16 +48,52 @@ namespace Core.Admin.Managers
             return role;
         }
 
-        public async Task<ApplicationRoles> Get(ApplicationRoles role)
-        {
-            var res = await _store.GetElement(r => r.Name.Equals(role.Name) && r.Id.Equals(role.Id));
-            return role;
-        }
-
         public async Task<ICollection<ApplicationRoles>> Get()
         {
             var roleList = await _store.GetCollection();
             return roleList;
+        }
+
+        public async Task<ICollection<ApplicationRoles>> GetByApplication(string applicationId)
+        {
+            var res = await _storeApplications.GetElement(x => x.Id == applicationId);
+
+            if (res != null)
+            {
+                return res.Roles.Select(x => new ApplicationRoles()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList();
+            }
+            else
+            {
+                return new List<ApplicationRoles>();
+            }
+        }
+
+        public async Task<ApplicationRoles> RemoveFromApplication(string roleId, string applicationId)
+        {
+            var app = new Application() { Id = applicationId };
+
+            var role = await _store.GetElement(roleId);
+
+            role.Applications.Remove(app);
+
+            var res = await _store.UpdateElement(roleId, role);
+            return res;
+        }
+
+        public async Task<ApplicationRoles> AddToApplication(string roleId, string applicationId)
+        {
+            var app = new Application() { Id = applicationId };
+
+            var role = await _store.GetElement(roleId);
+
+            role.Applications.Add(app);
+
+            var res = await _store.UpdateElement(roleId, role);
+            return res;
         }
 
         public async Task<ApplicationRoles> UpdateAsync(ApplicationRoles role)
