@@ -50,7 +50,7 @@ namespace WebAPI.Admin.OData
         // PUT: odata/ApplicationLists(5)
         public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<ApplicationList> patch)
         {
-            Validate(patch.GetEntity());
+            Validate(patch.GetInstance());
 
             if (!ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace WebAPI.Admin.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ApplicationList> patch)
         {
-            Validate(patch.GetEntity());
+            Validate(patch.GetInstance());
 
             if (!ModelState.IsValid)
             {

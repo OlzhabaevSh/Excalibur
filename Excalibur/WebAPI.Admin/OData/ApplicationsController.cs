@@ -49,7 +49,7 @@ namespace WebAPI.Admin.OData
         // PUT: odata/Applications(5)
         public async Task<IHttpActionResult> Put([FromODataUri] string key, Delta<Application> patch)
         {
-            Validate(patch.GetEntity());
+            Validate(patch.GetInstance());
 
             if (!ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace WebAPI.Admin.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<Application> patch)
         {
-            Validate(patch.GetEntity());
+            Validate(patch.GetInstance());
 
             if (!ModelState.IsValid)
             {
