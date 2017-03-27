@@ -30,6 +30,7 @@ namespace WebAPI.Admin
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<ApplicationUser>("ApplicationUsers");
