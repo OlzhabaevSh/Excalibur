@@ -68,11 +68,11 @@ namespace WebAPI.Admin
                     //    .Name("apiKey")
                     //    .In("header");
                     //
-                    c.OAuth2("oauth2")
-                        .Description("OAuth2 Implicit Grant")
-                        .Flow("implicit")
-                        .AuthorizationUrl("/OAuth/Authorize")
-                        .TokenUrl("/OAuth/Token");
+                    //c.OAuth2("oauth2")
+                    //    .Description("OAuth2 Implicit Grant")
+                    //    .Flow("implicit")
+                    //    .AuthorizationUrl("/OAuth/Authorize")
+                    //    .TokenUrl("/OAuth/Token");
 
                     // Set this flag to omit descriptions for any actions decorated with the Obsolete attribute
                     //c.IgnoreObsoleteActions();
@@ -228,13 +228,13 @@ namespace WebAPI.Admin
                     // If your API supports the OAuth2 Implicit flow, and you've described it correctly, according to
                     // the Swagger 2.0 specification, you can enable UI support as shown below.
                     //
-                    c.EnableOAuth2Support(
-                        clientId: "olzhabaev.sh@kaizen.kz",
-                        clientSecret: "Qwerty123!",
-                        realm: "test-realm",
-                        appName: "Swagger UI"
+                    //c.EnableOAuth2Support(
+                    //    clientId: "olzhabaev.sh@kaizen.kz",
+                    //    clientSecret: "Qwerty123!",
+                    //    realm: "test-realm",
+                    //    appName: "Swagger UI"
                     //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
-                    );
+                    //);
 
                     // If your API supports ApiKey, you can override the default values.
                     // "apiKeyIn" can either be "query" or "header"                                                

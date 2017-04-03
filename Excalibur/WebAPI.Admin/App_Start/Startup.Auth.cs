@@ -52,8 +52,9 @@ namespace WebAPI.Admin
                 AuthorizeEndpointPath = new PathString("/OAuth/Authorize"),
                 TokenEndpointPath = new PathString("/OAuth/Token"),
                 ApplicationCanDisplayErrors = true,
-#if DEBUG
                 AllowInsecureHttp = true,
+#if DEBUG
+                //AllowInsecureHttp = true,
 #endif
                 // Authorization server provider which controls the lifecycle of Authorization Server
                 Provider = new OAuthAuthorizationServerProvider

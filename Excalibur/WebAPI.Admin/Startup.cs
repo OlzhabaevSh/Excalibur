@@ -15,16 +15,16 @@ namespace WebAPI.Admin
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseCors(CorsOptions.AllowAll);
+            //app.UseCors(CorsOptions.AllowAll);
             //app.Map("/odata", path =>
             //{
             //    path.UseCors(CorsOptions.AllowAll);
             //});
-            app.Map("/signalr", path =>
-            {
-                path.UseCors(CorsOptions.AllowAll);
-                path.RunSignalR();
-            });
+            //app.Map("/signalr", path =>
+            //{
+            //    path.UseCors(CorsOptions.AllowAll);
+            //    path.RunSignalR();
+            //});
 
             ConfigureAuth(app);
             
@@ -33,12 +33,12 @@ namespace WebAPI.Admin
             //    path.UseCors(CorsOptions.AllowAll);
             //});
 
-            var serializerSettings = new JsonSerializerSettings();
-            serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            //var serializerSettings = new JsonSerializerSettings();
+            //serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 
-            var serializer = JsonSerializer.Create(serializerSettings);
-            GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
+            //var serializer = JsonSerializer.Create(serializerSettings);
+            //GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
         }
     }
 }
