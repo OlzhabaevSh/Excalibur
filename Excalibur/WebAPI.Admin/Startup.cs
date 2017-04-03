@@ -15,7 +15,6 @@ namespace WebAPI.Admin
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
             app.UseCors(CorsOptions.AllowAll);
             app.Map("/odata", path =>
             {
@@ -26,10 +25,13 @@ namespace WebAPI.Admin
                 path.UseCors(CorsOptions.AllowAll);
                 path.RunSignalR();
             });
-            app.Map("/OAuth", path =>
-            {
-                path.UseCors(CorsOptions.AllowAll);
-            });
+
+            ConfigureAuth(app);
+            
+            //app.Map("/OAuth", path =>
+            //{
+            //    path.UseCors(CorsOptions.AllowAll);
+            //});
 
             var serializerSettings = new JsonSerializerSettings();
             serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
