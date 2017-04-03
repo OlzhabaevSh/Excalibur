@@ -10,14 +10,14 @@ namespace Core.Admin.Extensions
 {
     public static class ApplicationUserExtension
     {
-        public static IdentityUser ToIdentityUser(this ApplicationUser user)
-        {
-            return new IdentityUser()
-            {
-                Id = user.Id,                
-                PasswordHash = user.PasswordHash,               
-                UserName = user.UserName
-            };
-        }
+        //public static IdentityUser ToIdentityUser(this ApplicationUser user)
+        //{
+        //    return new IdentityUser()
+        //    {
+        //        Id = user.Id,                
+        //        PasswordHash = user.PasswordHash,               
+        //        UserName = user.UserName
+        //    };
+        //}
     }
 }

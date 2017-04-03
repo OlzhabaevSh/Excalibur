@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Models
 {
-    public class ApplicationRoles: IdentityRole
+    public class ApplicationRoles
     {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
         public virtual ICollection<Application> Applications { get; set; }
+
+        public virtual ICollection<ApplicationList> ApplicationList { get; set; }
     }
 }

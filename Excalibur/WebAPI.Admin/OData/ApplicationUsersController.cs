@@ -16,40 +16,33 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    /*
-    The WebApiConfig class may require additional changes to add a route for this controller. Merge these statements into the Register method of the WebApiConfig class as applicable. Note that OData URLs are case sensitive.
-
-    using System.Web.OData.Builder;
-    using System.Web.OData.Extensions;
-    using Core.Admin.Models;
-    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<ApplicationUser>("ApplicationUsers");
-    builder.EntitySet<ApplicationList>("ApplicationLists"); 
-    builder.EntitySet<IdentityUserClaim>("IdentityUserClaims"); 
-    builder.EntitySet<IdentityUserLogin>("IdentityUserLogins"); 
-    builder.EntitySet<IdentityUserRole>("IdentityUserRoles"); 
-    config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
-    */
+    [Authorize]
     public class ApplicationUsersController : ODataController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        // GET: ApplicationUsers
+        private ApplicationDbContext db;
 
-        // GET: odata/ApplicationUsers
-        [EnableQuery]
-        public IQueryable<ApplicationUser> GetApplicationUsers()
+        public ApplicationUsersController(ApplicationDbContext dbContext)
         {
-            return db.Users;
+            db = dbContext;
         }
 
-        // GET: odata/ApplicationUsers(5)
+        // GET: odata/Projects
+        [EnableQuery]
+        public IQueryable<Application> GetApplicationUsers()
+        {
+            return db.Applications;
+        }
+
+        // GET: odata/Projects(5)
         [EnableQuery]
         public SingleResult<ApplicationUser> GetApplicationUser([FromODataUri] string key)
         {
-            return SingleResult.Create(db.Users.Where(applicationUser => applicationUser.Id == key));
+            return SingleResult.Create(db.ApplicationUsers.Where(app => app.Id == key));
         }
 
-        // PUT: odata/ApplicationUsers(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] string key, Delta<ApplicationUser> patch)
+        // PUT: odata/Projects(5)
+        public IHttpActionResult Put([FromODataUri] string key, Delta<ApplicationUser> patch)
         {
             Validate(patch.GetInstance());
 
@@ -58,21 +51,21 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser applicationUser = await db.Users.FirstOrDefaultAsync(x => x.Id == key);
-            if (applicationUser == null)
+            ApplicationUser app = db.ApplicationUsers.Find(key);
+            if (app == null)
             {
                 return NotFound();
             }
 
-            patch.Put(applicationUser);
+            patch.Put(app);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ApplicationUserExists(key))
+                if (!ProjectExists(key))
                 {
                     return NotFound();
                 }
@@ -82,119 +75,37 @@ namespace WebAPI.Admin.OData
                 }
             }
 
-            return Updated(applicationUser);
+            return Updated(app);
         }
 
-        // POST: odata/ApplicationUsers
-        public async Task<IHttpActionResult> Post(ApplicationUser applicationUser)
+        // POST: odata/Projects
+        public IHttpActionResult Post(ApplicationUser app)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            applicationUser.Id = Guid.NewGuid().ToString();
-            db.Users.Add(applicationUser);
+            db.ApplicationUsers.Add(app);
+            db.SaveChanges();
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ApplicationUserExists(applicationUser.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Created(applicationUser);
+            return Created(app);
         }
 
-        // PATCH: odata/ApplicationUsers(5)
-        [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<ApplicationUser> patch)
+        // DELETE: odata/Projects(5)
+        public IHttpActionResult Delete([FromODataUri] int key)
         {
-            Validate(patch.GetInstance());
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            ApplicationUser applicationUser = await db.Users.FirstOrDefaultAsync(x => x.Id == key);
-            if (applicationUser == null)
+            ApplicationUser app = db.ApplicationUsers.Find(key);
+            if (app == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(applicationUser);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ApplicationUserExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(applicationUser);
-        }
-
-        // DELETE: odata/ApplicationUsers(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] string key)
-        {
-            ApplicationUser applicationUser = await db.Users.FirstOrDefaultAsync(x => x.Id == key);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            db.Users.Remove(applicationUser);
-            await db.SaveChangesAsync();
+            db.ApplicationUsers.Remove(app);
+            db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        // GET: odata/ApplicationUsers(5)/ApplicationList
-        [EnableQuery]
-        public IQueryable<ApplicationList> GetApplicationList([FromODataUri] string key)
-        {
-            return db.Users.Where(m => m.Id == key).SelectMany(m => m.ApplicationList);
-        }
-
-        //// GET: odata/ApplicationUsers(5)/Claims
-        //[EnableQuery]
-        //public IQueryable<IdentityUserClaim> GetClaims([FromODataUri] string key)
-        //{
-        //    return db.ApplicationUsers.Where(m => m.Id == key).SelectMany(m => m.Claims);
-        //}
-
-        //// GET: odata/ApplicationUsers(5)/Logins
-        //[EnableQuery]
-        //public IQueryable<IdentityUserLogin> GetLogins([FromODataUri] string key)
-        //{
-        //    return db.ApplicationUsers.Where(m => m.Id == key).SelectMany(m => m.Logins);
-        //}
-
-        //// GET: odata/ApplicationUsers(5)/Roles
-        //[EnableQuery]
-        //public IQueryable<IdentityUserRole> GetRoles([FromODataUri] string key)
-        //{
-        //    return db.ApplicationUsers.Where(m => m.Id == key).SelectMany(m => m.Roles);
-        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -205,9 +116,9 @@ namespace WebAPI.Admin.OData
             base.Dispose(disposing);
         }
 
-        private bool ApplicationUserExists(string key)
+        private bool ProjectExists(string key)
         {
-            return db.Users.Any(e => e.Id == key);
+            return db.ApplicationUsers.Count(e => e.Id == key) > 0;
         }
     }
 }

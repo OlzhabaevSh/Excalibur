@@ -83,21 +83,13 @@
     <Compile Include="Managers\AdminRoleManager.cs" />
     <Compile Include="Managers\ApplicationManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
-    <Compile Include="Migrations\201703140842251_init.cs" />
-    <Compile Include="Migrations\201703140842251_init.Designer.cs">
-      <DependentUpon>201703140842251_init.cs</DependentUpon>
+    <Compile Include="Migrations\201704030430428_init.cs" />
+    <Compile Include="Migrations\201704030430428_init.Designer.cs">
+      <DependentUpon>201704030430428_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703170358482_updateModel.cs" />
-    <Compile Include="Migrations\201703170358482_updateModel.Designer.cs">
-      <DependentUpon>201703170358482_updateModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703171105524_updateId.cs" />
-    <Compile Include="Migrations\201703171105524_updateId.Designer.cs">
-      <DependentUpon>201703171105524_updateId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703171113592_updateIdBack.cs" />
-    <Compile Include="Migrations\201703171113592_updateIdBack.Designer.cs">
-      <DependentUpon>201703171113592_updateIdBack.cs</DependentUpon>
+    <Compile Include="Migrations\201704030505063_updateRoleName.cs" />
+    <Compile Include="Migrations\201704030505063_updateRoleName.Designer.cs">
+      <DependentUpon>201704030505063_updateRoleName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Application.cs" />
@@ -129,17 +121,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703140842251_init.resx">
-      <DependentUpon>201703140842251_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704030430428_init.resx">
+      <DependentUpon>201704030430428_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703170358482_updateModel.resx">
-      <DependentUpon>201703170358482_updateModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703171105524_updateId.resx">
-      <DependentUpon>201703171105524_updateId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703171113592_updateIdBack.resx">
-      <DependentUpon>201703171113592_updateIdBack.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704030505063_updateRoleName.resx">
+      <DependentUpon>201704030505063_updateRoleName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

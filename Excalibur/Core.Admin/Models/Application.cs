@@ -12,14 +12,13 @@ namespace Core.Admin.Models
     public class Application
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public string Url { get; set; }
-
-        public string Token { get; set; }
-
+        
         public virtual ICollection<ApplicationRoles> Roles { get; set; }
 
         public virtual ICollection<ApplicationList> ApplicationList { get; set; }

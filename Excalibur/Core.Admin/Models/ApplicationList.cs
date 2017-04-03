@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,11 @@ namespace Core.Admin.Models
 {
     public class ApplicationList
     {
+        [Key]
         public int Id { get; set; }
 
         [ForeignKey("Application")]
-        public string ApplicationId { get; set; }
+        public int ApplicationId { get; set; }
         public virtual Application Application { get; set; }
 
         [ForeignKey("ApplicationUser")]
@@ -21,7 +23,7 @@ namespace Core.Admin.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("Role")]
-        public string RoleId { get; set; }
+        public int RoleId { get; set; }
         public virtual ApplicationRoles Role { get; set; }
 
 

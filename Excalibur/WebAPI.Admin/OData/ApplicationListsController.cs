@@ -16,39 +16,32 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    /*
-    The WebApiConfig class may require additional changes to add a route for this controller. Merge these statements into the Register method of the WebApiConfig class as applicable. Note that OData URLs are case sensitive.
-
-    using System.Web.OData.Builder;
-    using System.Web.OData.Extensions;
-    using Core.Admin.Models;
-    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<ApplicationList>("ApplicationLists");
-    builder.EntitySet<Application>("Applications"); 
-    builder.EntitySet<ApplicationUser>("ApplicationUsers"); 
-    builder.EntitySet<ApplicationRoles>("IdentityRoles"); 
-    config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
-    */
+    [Authorize]
     public class ApplicationListsController : ODataController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
 
-        // GET: odata/ApplicationLists
+        public ApplicationListsController(ApplicationDbContext dbContext)
+        {
+            db = dbContext;
+        }
+
+        // GET: odata/Projects
         [EnableQuery]
         public IQueryable<ApplicationList> GetApplicationLists()
         {
             return db.ApplicationLists;
         }
 
-        // GET: odata/ApplicationLists(5)
+        // GET: odata/Projects(5)
         [EnableQuery]
         public SingleResult<ApplicationList> GetApplicationList([FromODataUri] int key)
         {
-            return SingleResult.Create(db.ApplicationLists.Where(applicationList => applicationList.Id == key));
+            return SingleResult.Create(db.ApplicationLists.Where(app => app.Id == key));
         }
 
-        // PUT: odata/ApplicationLists(5)
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, Delta<ApplicationList> patch)
+        // PUT: odata/Projects(5)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationList> patch)
         {
             Validate(patch.GetInstance());
 
@@ -57,21 +50,21 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
-            ApplicationList applicationList = await db.ApplicationLists.FindAsync(key);
-            if (applicationList == null)
+            ApplicationList app = db.ApplicationLists.Find(key);
+            if (app == null)
             {
                 return NotFound();
             }
 
-            patch.Put(applicationList);
+            patch.Put(app);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ApplicationListExists(key))
+                if (!ProjectExists(key))
                 {
                     return NotFound();
                 }
@@ -81,95 +74,36 @@ namespace WebAPI.Admin.OData
                 }
             }
 
-            return Updated(applicationList);
+            return Updated(app);
         }
 
-        // POST: odata/ApplicationLists
-        public async Task<IHttpActionResult> Post(ApplicationList applicationList)
+        // POST: odata/Projects
+        public IHttpActionResult Post(ApplicationList app)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.ApplicationLists.Add(applicationList);
-            await db.SaveChangesAsync();
+            db.ApplicationLists.Add(app);
+            db.SaveChanges();
 
-            return Created(applicationList);
+            return Created(app);
         }
 
-        // PATCH: odata/ApplicationLists(5)
-        [AcceptVerbs("PATCH", "MERGE")]
-        public async Task<IHttpActionResult> Patch([FromODataUri] int key, Delta<ApplicationList> patch)
+        // DELETE: odata/Projects(5)
+        public IHttpActionResult Delete([FromODataUri] int key)
         {
-            Validate(patch.GetInstance());
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            ApplicationList applicationList = await db.ApplicationLists.FindAsync(key);
-            if (applicationList == null)
+            ApplicationList app = db.ApplicationLists.Find(key);
+            if (app == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(applicationList);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ApplicationListExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(applicationList);
-        }
-
-        // DELETE: odata/ApplicationLists(5)
-        public async Task<IHttpActionResult> Delete([FromODataUri] int key)
-        {
-            ApplicationList applicationList = await db.ApplicationLists.FindAsync(key);
-            if (applicationList == null)
-            {
-                return NotFound();
-            }
-
-            db.ApplicationLists.Remove(applicationList);
-            await db.SaveChangesAsync();
+            db.ApplicationLists.Remove(app);
+            db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // GET: odata/ApplicationLists(5)/Application
-        [EnableQuery]
-        public SingleResult<Application> GetApplication([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ApplicationLists.Where(m => m.Id == key).Select(m => m.Application));
-        }
-
-        // GET: odata/ApplicationLists(5)/ApplicationUser
-        [EnableQuery]
-        public SingleResult<ApplicationUser> GetApplicationUser([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ApplicationLists.Where(m => m.Id == key).Select(m => m.ApplicationUser));
-        }
-
-        // GET: odata/ApplicationLists(5)/Role
-        [EnableQuery]
-        public SingleResult<ApplicationRoles> GetRole([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ApplicationLists.Where(m => m.Id == key).Select(m => m.Role));
         }
 
         protected override void Dispose(bool disposing)
@@ -181,9 +115,9 @@ namespace WebAPI.Admin.OData
             base.Dispose(disposing);
         }
 
-        private bool ApplicationListExists(int key)
+        private bool ProjectExists(int key)
         {
-            return db.ApplicationLists.Count(e => e.Id == key) > 0;
+            return db.Applications.Count(e => e.Id == key) > 0;
         }
     }
 }

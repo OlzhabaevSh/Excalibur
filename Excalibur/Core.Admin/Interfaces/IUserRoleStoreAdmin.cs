@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Interfaces
 {
-    public interface IUserRoleStoreAdmin : IUserRoleStore<ApplicationUser>
-    {
-        Task AddToRoleAsync(string userId, string roleName, string applicationId);
+    //public interface IUserRoleStoreAdmin : IUserRoleStore<ApplicationUser>
+    //{
+    //    Task AddToRoleAsync(string userId, string roleName, string applicationId);
 
-        Task RemoveFromRoleAsync(string userId, string roleName, string applicationId);
+    //    Task RemoveFromRoleAsync(string userId, string roleName, string applicationId);
 
-        Task<IList<string>> GetRolesAsync(string userId, string applicationId);
+    //    Task<IList<string>> GetRolesAsync(string userId, string applicationId);
 
-        Task<bool> IsInRoleAsync(string userId, string roleName, string applicationId);
-    }
+    //    Task<bool> IsInRoleAsync(string userId, string roleName, string applicationId);
+    //}
 }

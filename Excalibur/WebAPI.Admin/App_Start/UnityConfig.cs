@@ -5,7 +5,7 @@ using Core.Admin.Models;
 using Core.Admin.Interfaces;
 using Microsoft.AspNet.Identity;
 using Core.Admin.Stores;
-using Core.Admin.Managers;
+//using Core.Admin.Managers;
 using Core.Interfaces;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -42,14 +42,14 @@ namespace WebAPI.Admin.App_Start
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
             container.RegisterType<ApplicationDbContext, ApplicationDbContext>();
-            container.RegisterType<IUserStoreAdmin, AdminUserStore>();
-            container.RegisterType<IUserStore<ApplicationUser>, AdminUserStore>();
+            //container.RegisterType<IUserStoreAdmin, AdminUserStore>();
+            //container.RegisterType<IUserStore<ApplicationUser>, AdminUserStore>();
             
-            container.RegisterType<IStore<Application, string>, ApplicationStore>();
-            container.RegisterType<IApplicationManagerAdmin<Application, string>, ApplicationManager>();
-            container.RegisterType<IStore<ApplicationList, int>, ApplicationListStore>();
-            container.RegisterType<IAdminRoleStore, AdminRoleStore>();
-            container.RegisterType<IAdminRoleManager, AdminRoleManager>();
+            //container.RegisterType<IStore<Application, string>, ApplicationStore>();
+            //container.RegisterType<IApplicationManagerAdmin<Application, string>, ApplicationManager>();
+            //container.RegisterType<IStore<ApplicationList, int>, ApplicationListStore>();
+            //container.RegisterType<IAdminRoleStore, AdminRoleStore>();
+            //container.RegisterType<IAdminRoleManager, AdminRoleManager>();
             // TODO: Register your types here
             // container.RegisterType<IAdminRoleStore, AdminRoleStore>();
         }

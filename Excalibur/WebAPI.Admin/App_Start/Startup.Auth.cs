@@ -8,64 +8,160 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using WebAPI.Admin.Providers;
+//using WebAPI.Admin.Providers;
 using Core.Admin.Models;
-using Core.Admin.Managers;
+using Microsoft.Owin.Security;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Collections.Concurrent;
+using Microsoft.Owin.Security.Infrastructure;
+//using Core.Admin.Managers;
 
 namespace WebAPI.Admin
 {
     public partial class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-
-        public static string PublicClientId { get; private set; }
-
-        // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Настройка контекста базы данных и диспетчера пользователей для использования одного экземпляра на запрос
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(IdentityConfig.Create); //Метод создания находится в IdentityConfig, сам класс лежит в Core.Admin.Managers
-
-
-            // Включение использования файла cookie, в котором приложение может хранить информацию для пользователя, выполнившего вход,
-            // и использование файла cookie для временного хранения информации о входах пользователя с помощью стороннего поставщика входа
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Настройка приложения для потока обработки на основе OAuth
-            PublicClientId = "self";
-            OAuthOptions = new OAuthAuthorizationServerOptions
+            // Enable the Application Sign In Cookie.
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                TokenEndpointPath = new PathString("/Token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                // В рабочем режиме задайте AllowInsecureHttp = false
-                AllowInsecureHttp = true
-            };
+                AuthenticationType = "Application",
+                AuthenticationMode = AuthenticationMode.Passive,
+                LoginPath = new PathString("/Account/Login"),
+                LogoutPath = new PathString("/Account/Logout"),
+            });
 
-            // Включение использования приложением маркера-носителя для аутентификации пользователей
-            app.UseOAuthBearerTokens(OAuthOptions);
+            // Enable the External Sign In Cookie.
+            app.SetDefaultSignInAsAuthenticationType("External");
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = "External",
+                AuthenticationMode = AuthenticationMode.Passive,
+                CookieName = CookieAuthenticationDefaults.CookiePrefix + "External",
+                ExpireTimeSpan = TimeSpan.FromMinutes(5),
+            });
 
-            // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            // Enable Google authentication.
+            //app.UseGoogleAuthentication();
 
-            //app.UseTwitterAuthentication(
-            //    consumerKey: "",
-            //    consumerSecret: "");
+            // Setup Authorization Server
+            app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
+            {
+                AuthorizeEndpointPath = new PathString("/OAuth/Authorize"),
+                TokenEndpointPath = new PathString("/OAuth/Token"),
+                ApplicationCanDisplayErrors = true,
+#if DEBUG
+                AllowInsecureHttp = true,
+#endif
+                // Authorization server provider which controls the lifecycle of Authorization Server
+                Provider = new OAuthAuthorizationServerProvider
+                {
+                    OnValidateClientRedirectUri = ValidateClientRedirectUri,
+                    OnValidateClientAuthentication = ValidateClientAuthentication,
+                    OnGrantResourceOwnerCredentials = GrantResourceOwnerCredentials,
+                    OnGrantClientCredentials = GrantClientCredetails
+                },
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+                // Authorization code provider which creates and receives the authorization code.
+                AuthorizationCodeProvider = new AuthenticationTokenProvider
+                {
+                    OnCreate = CreateAuthenticationCode,
+                    OnReceive = ReceiveAuthenticationCode,
+                },
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+                // Refresh token provider which creates and receives refresh token.
+                RefreshTokenProvider = new AuthenticationTokenProvider
+                {
+                    OnCreate = CreateRefreshToken,
+                    OnReceive = ReceiveRefreshToken,
+                }
+
+            });
+
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
+
+        private Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
+        {
+            //if (context.ClientId == Clients.Client1.Id)
             //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            //    context.Validated(Clients.Client1.RedirectUrl);
+            //}
+            //else if (context.ClientId == Clients.Client2.Id)
+            //{
+            //    context.Validated(Clients.Client2.RedirectUrl);
+            //}
+            return Task.FromResult(0);
+        }
+
+        private Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        {
+            string clientId;
+            string clientSecret;
+            if (context.TryGetBasicCredentials(out clientId, out clientSecret) ||
+                context.TryGetFormCredentials(out clientId, out clientSecret))
+            {
+
+                using (var cntx = new ApplicationDbContext())
+                {
+                    var client = cntx.ApplicationUsers.First(x => x.UserName == clientId && x.Password == clientSecret);
+
+                    if (client != null)
+                    {
+                        context.Validated();
+                    }
+                }
+            }
+            return Task.FromResult(0);
+        }
+
+        private Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            var identity = new ClaimsIdentity(new GenericIdentity(context.UserName, OAuthDefaults.AuthenticationType), context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
+
+            context.Validated(identity);
+
+            return Task.FromResult(0);
+        }
+
+        private Task GrantClientCredetails(OAuthGrantClientCredentialsContext context)
+        {
+            var identity = new ClaimsIdentity(new GenericIdentity(context.ClientId, OAuthDefaults.AuthenticationType), context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
+
+            context.Validated(identity);
+
+            return Task.FromResult(0);
+        }
+
+
+        private readonly ConcurrentDictionary<string, string> _authenticationCodes =
+            new ConcurrentDictionary<string, string>(StringComparer.Ordinal);
+
+        private void CreateAuthenticationCode(AuthenticationTokenCreateContext context)
+        {
+            context.SetToken(Guid.NewGuid().ToString("n") + Guid.NewGuid().ToString("n"));
+            _authenticationCodes[context.Token] = context.SerializeTicket();
+        }
+
+        private void ReceiveAuthenticationCode(AuthenticationTokenReceiveContext context)
+        {
+            string value;
+            if (_authenticationCodes.TryRemove(context.Token, out value))
+            {
+                context.DeserializeTicket(value);
+            }
+        }
+
+        private void CreateRefreshToken(AuthenticationTokenCreateContext context)
+        {
+            context.SetToken(context.SerializeTicket());
+        }
+
+        private void ReceiveRefreshToken(AuthenticationTokenReceiveContext context)
+        {
+            context.DeserializeTicket(context.Token);
         }
     }
 }

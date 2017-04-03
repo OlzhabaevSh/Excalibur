@@ -7,13 +7,13 @@ namespace Core.Admin.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class updateIdBack : IMigrationMetadata
+    public sealed partial class updateRoleName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateIdBack));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateRoleName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703171113592_updateIdBack"; }
+            get { return "201704030505063_updateRoleName"; }
         }
         
         string IMigrationMetadata.Source

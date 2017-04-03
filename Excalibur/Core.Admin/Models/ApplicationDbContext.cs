@@ -8,27 +8,19 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
         public virtual DbSet<ApplicationList> ApplicationLists { get; set; }
 
         public virtual DbSet<Application> Applications { get; set; }
 
-        public virtual DbSet<ApplicationRoles> IdentityRoles { get; set; }
+        public virtual DbSet<ApplicationRoles> ApplicationRoles { get; set; }
+
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
-        }
-
-        //public ApplicationDbContext(string connectionString)
-        //    : base(connectionString, throwIfV1Schema: false)
-        //{
-        //}
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
         }
     }
 }

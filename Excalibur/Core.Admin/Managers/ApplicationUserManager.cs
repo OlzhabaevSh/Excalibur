@@ -13,51 +13,51 @@ using System.Threading.Tasks;
 
 namespace Core.Admin.Managers
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>
-    {
-        private readonly IUserStoreAdmin _store;
-        public ApplicationUserManager(IUserStoreAdmin store) : base(store)
-        {
-            _store = store;
-        }
+    //public class ApplicationUserManager : UserManager<ApplicationUser>
+    //{
+    //    private readonly IUserStoreAdmin _store;
+    //    public ApplicationUserManager(IUserStoreAdmin store) : base(store)
+    //    {
+    //        _store = store;
+    //    }
 
-        public override Task<IdentityResult> CreateAsync(ApplicationUser user)
-        {
-            var task = _store.CreateAsync(user);
+    //    public override Task<IdentityResult> CreateAsync(ApplicationUser user)
+    //    {
+    //        var task = _store.CreateAsync(user);
             
-            return Task.FromResult(IdentityResult.Success);
-        }
+    //        return Task.FromResult(IdentityResult.Success);
+    //    }
 
-        public override Task<ApplicationUser> FindAsync(string userName, string password)
-        {
-            var user = _store.GetElement(x => x.Email == userName && x.PasswordHash == password);
+    //    public override Task<ApplicationUser> FindAsync(string userName, string password)
+    //    {
+    //        var user = _store.GetElement(x => x.Email == userName && x.PasswordHash == password);
 
-            return user;
-        }
+    //        return user;
+    //    }
 
-        public override Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
-        {
-            user.PasswordHash = password;
-            var task = _store.CreateAsync(user);
+    //    public override Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+    //    {
+    //        user.PasswordHash = password;
+    //        var task = _store.CreateAsync(user);
 
-            return Task.FromResult(IdentityResult.Success);
-        }
+    //        return Task.FromResult(IdentityResult.Success);
+    //    }
 
-        public override Task<IdentityResult> DeleteAsync(ApplicationUser user)
-        {
-            var task = _store.DeleteAsync(user);
-            return Task.FromResult(IdentityResult.Success);
-        }
+    //    public override Task<IdentityResult> DeleteAsync(ApplicationUser user)
+    //    {
+    //        var task = _store.DeleteAsync(user);
+    //        return Task.FromResult(IdentityResult.Success);
+    //    }
 
-        public override Task<ApplicationUser> FindByIdAsync(string userId)
-        {
-            return _store.FindByIdAsync(userId);
-        }
+    //    public override Task<ApplicationUser> FindByIdAsync(string userId)
+    //    {
+    //        return _store.FindByIdAsync(userId);
+    //    }
 
-        public async Task<ICollection<string>> Delete(string[] userIds)
-        {
-            var users = await _store.DeleteCollection(userIds);
-            return users;
-        }
-    }
+    //    public async Task<ICollection<string>> Delete(string[] userIds)
+    //    {
+    //        var users = await _store.DeleteCollection(userIds);
+    //        return users;
+    //    }
+    //}
 }
