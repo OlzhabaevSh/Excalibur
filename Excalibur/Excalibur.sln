@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Admin", "WebAPI.Admin\WebAPI.Admin.csproj", "{9EF424F1-35D3-4120-8800-F44BA7C9B1CB}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Admin", "Core.Admin\Core.Admin.csproj", "{AF71C5D4-E1A9-4184-B8C1-6A1934A91499}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{5A8622D0-12EC-4D67-9BF3-3BB889D07F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.HR", "WebAPI.HR\WebAPI.HR.csproj", "{FBF7B9AD-7452-4119-AF31-6B3C2758FD62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{AF71C5D4-E1A9-4184-B8C1-6A1934A91499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF71C5D4-E1A9-4184-B8C1-6A1934A91499}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF71C5D4-E1A9-4184-B8C1-6A1934A91499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBF7B9AD-7452-4119-AF31-6B3C2758FD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBF7B9AD-7452-4119-AF31-6B3C2758FD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBF7B9AD-7452-4119-AF31-6B3C2758FD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBF7B9AD-7452-4119-AF31-6B3C2758FD62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
