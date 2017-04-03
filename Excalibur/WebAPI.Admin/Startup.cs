@@ -16,10 +16,10 @@ namespace WebAPI.Admin
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.Map("/odata", path =>
-            {
-                path.UseCors(CorsOptions.AllowAll);
-            });
+            //app.Map("/odata", path =>
+            //{
+            //    path.UseCors(CorsOptions.AllowAll);
+            //});
             app.Map("/signalr", path =>
             {
                 path.UseCors(CorsOptions.AllowAll);
