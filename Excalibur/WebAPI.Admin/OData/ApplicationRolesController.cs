@@ -93,13 +93,13 @@ namespace WebAPI.Admin.OData
         // DELETE: odata/Projects(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            Application app = db.Applications.Find(key);
+            ApplicationRoles app = db.ApplicationRoles.Find(key);
             if (app == null)
             {
                 return NotFound();
             }
 
-            db.Applications.Remove(app);
+            db.ApplicationRoles.Remove(app);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
