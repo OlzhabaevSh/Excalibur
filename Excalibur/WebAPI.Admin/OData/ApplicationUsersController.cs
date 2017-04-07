@@ -28,9 +28,9 @@ namespace WebAPI.Admin.OData
 
         // GET: odata/Projects
         [EnableQuery]
-        public IQueryable<Application> GetApplicationUsers()
+        public IQueryable<ApplicationUser> GetApplicationUsers()
         {
-            return db.Applications;
+            return db.ApplicationUsers;
         }
 
         // GET: odata/Projects(5)
