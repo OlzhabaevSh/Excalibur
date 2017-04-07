@@ -16,7 +16,6 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    [Authorize]
     public class ApplicationListsController : ODataController
     {
         private ApplicationDbContext db;
