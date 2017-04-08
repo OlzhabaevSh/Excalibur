@@ -18,6 +18,58 @@ namespace WebAPI.Admin.OData
 {
     public partial class ApplicationRolesController : ODataController
     {
+        public IHttpActionResult AddToApplications(int key, ODataActionParameters parameters)
+        {
+            if (!parameters.ContainsKey("applicationIds"))
+            {
+                return BadRequest("No applicationIds");
+            }
+
+            var role = db.ApplicationRoles.Find(key);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationIds = (ICollection<int>)parameters["applicationId"];
+            var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
+
+            foreach (var application in applications)
+            {
+                role.Applications.Add(application);
+            }
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        public IHttpActionResult RemoveFromApplications(int key, ODataActionParameters parameters)
+        {
+            if (!parameters.ContainsKey("applicationIds"))
+            {
+                return BadRequest("No applicationIds");
+            }
+
+            var role = db.ApplicationRoles.Find(key);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationIds = (ICollection<int>)parameters["applicationId"];
+            var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
+
+            foreach (var application in applications)
+            {
+                role.Applications.Remove(application);
+            }
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
         public IHttpActionResult AddToApplication(int key, ODataActionParameters parameters)
         {
             if (!parameters.ContainsKey("applicationId"))
@@ -38,9 +90,12 @@ namespace WebAPI.Admin.OData
             {
                 return NotFound();
             }
-
-            role.Applications.Add(application);
-            db.SaveChanges();
+            if (!role.Applications.Contains(application))
+            {
+                role.Applications.Add(application);
+                db.SaveChanges();
+            }
+            
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -66,8 +121,11 @@ namespace WebAPI.Admin.OData
                 return NotFound();
             }
 
-            role.Applications.Remove(application);
-            db.SaveChanges();
+            if (role.Applications.Contains(application))
+            {
+                role.Applications.Remove(application);
+                db.SaveChanges();
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }

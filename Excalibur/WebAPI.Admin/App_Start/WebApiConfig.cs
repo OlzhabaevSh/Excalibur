@@ -43,6 +43,10 @@ namespace WebAPI.Admin
                 .Parameter<int>("applicationId");
             applicationRoles.EntityType.Action("RemoveFromApplication")
                 .Parameter<int>("applicationId");
+            applicationRoles.EntityType.Action("AddToApplications")
+                .Parameter<int>("applicationIds");
+            applicationRoles.EntityType.Action("RemoveFromApplications")
+                .Parameter<int>("applicationIds");
 
             config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 
