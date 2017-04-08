@@ -32,7 +32,7 @@ namespace WebAPI.Admin.OData
                 return NotFound();
             }
 
-            var applicationIds = (ICollection<int>)parameters["applicationId"];
+            var applicationIds = (ICollection<int>)parameters["applicationIds"];
             var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
 
             foreach (var application in applications)
@@ -58,7 +58,7 @@ namespace WebAPI.Admin.OData
                 return NotFound();
             }
 
-            var applicationIds = (ICollection<int>)parameters["applicationId"];
+            var applicationIds = (ICollection<int>)parameters["applicationIds"];
             var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
 
             foreach (var application in applications)
