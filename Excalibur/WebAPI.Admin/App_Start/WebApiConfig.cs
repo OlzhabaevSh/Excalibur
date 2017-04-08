@@ -44,9 +44,9 @@ namespace WebAPI.Admin
             applicationRoles.EntityType.Action("RemoveFromApplication")
                 .Parameter<int>("applicationId");
             applicationRoles.EntityType.Action("AddToApplications")
-                .Parameter<int>("applicationIds");
+                .Parameter<ICollection<int>>("applicationIds");
             applicationRoles.EntityType.Action("RemoveFromApplications")
-                .Parameter<int>("applicationIds");
+                .Parameter<ICollection<int>>("applicationIds");
 
             config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 
