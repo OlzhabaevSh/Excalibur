@@ -16,31 +16,31 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    public class ApplicationListsController : ODataController
+    public partial class ApplicationRolesController : ODataController
     {
         private ApplicationDbContext db;
 
-        public ApplicationListsController(ApplicationDbContext dbContext)
+        public ApplicationRolesController(ApplicationDbContext dbContext)
         {
             db = dbContext;
         }
 
         // GET: odata/Projects
         [EnableQuery]
-        public IQueryable<ApplicationList> GetApplicationLists()
+        public IQueryable<ApplicationRoles> GetApplicationRoles()
         {
-            return db.ApplicationLists;
+            return db.ApplicationRoles;
         }
 
         // GET: odata/Projects(5)
         [EnableQuery]
-        public SingleResult<ApplicationList> GetApplicationList([FromODataUri] int key)
+        public SingleResult<ApplicationRoles> GetApplicationRoles([FromODataUri] int key)
         {
-            return SingleResult.Create(db.ApplicationLists.Where(app => app.Id == key));
+            return SingleResult.Create(db.ApplicationRoles.Where(app => app.Id == key));
         }
 
         // PUT: odata/Projects(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationList> patch)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationRoles> patch)
         {
             Validate(patch.GetInstance());
 
@@ -49,7 +49,7 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
-            ApplicationList app = db.ApplicationLists.Find(key);
+            ApplicationRoles app = db.ApplicationRoles.Find(key);
             if (app == null)
             {
                 return NotFound();
@@ -77,14 +77,14 @@ namespace WebAPI.Admin.OData
         }
 
         // POST: odata/Projects
-        public IHttpActionResult Post(ApplicationList app)
+        public IHttpActionResult Post(ApplicationRoles app)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.ApplicationLists.Add(app);
+            db.ApplicationRoles.Add(app);
             db.SaveChanges();
 
             return Created(app);
@@ -93,13 +93,13 @@ namespace WebAPI.Admin.OData
         // DELETE: odata/Projects(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            ApplicationList app = db.ApplicationLists.Find(key);
+            ApplicationRoles app = db.ApplicationRoles.Find(key);
             if (app == null)
             {
                 return NotFound();
             }
 
-            db.ApplicationLists.Remove(app);
+            db.ApplicationRoles.Remove(app);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);

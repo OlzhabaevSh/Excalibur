@@ -16,107 +16,57 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    public class ApplicationRolesController : ODataController
+    public partial class ApplicationRolesController : ODataController
     {
-        private ApplicationDbContext db;
-
-        public ApplicationRolesController(ApplicationDbContext dbContext)
+        public IHttpActionResult AddToApplication(ApplicationRoles role, ODataActionParameters parameters)
         {
-            db = dbContext;
-        }
-
-        // GET: odata/Projects
-        [EnableQuery]
-        public IQueryable<ApplicationRoles> GetApplicationRoles()
-        {
-            return db.ApplicationRoles;
-        }
-
-        // GET: odata/Projects(5)
-        [EnableQuery]
-        public SingleResult<ApplicationRoles> GetApplicationRoles([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ApplicationRoles.Where(app => app.Id == key));
-        }
-
-        // PUT: odata/Projects(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationRoles> patch)
-        {
-            Validate(patch.GetInstance());
-
-            if (!ModelState.IsValid)
+            if (!parameters.ContainsKey("applicationId"))
             {
-                return BadRequest(ModelState);
+                return BadRequest("No applicationId");
             }
 
-            ApplicationRoles app = db.ApplicationRoles.Find(key);
-            if (app == null)
+            if (role == null)
             {
                 return NotFound();
             }
 
-            patch.Put(app);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProjectExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(app);
-        }
-
-        // POST: odata/Projects
-        public IHttpActionResult Post(ApplicationRoles app)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ApplicationRoles.Add(app);
-            db.SaveChanges();
-
-            return Created(app);
-        }
-
-        // DELETE: odata/Projects(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
-        {
-            ApplicationRoles app = db.ApplicationRoles.Find(key);
-            if (app == null)
+            var applicationId = (int)parameters["applicationId"];
+            var application = db.Applications.FirstOrDefault(app => app.Id == applicationId);
+            if (application == null)
             {
                 return NotFound();
             }
 
-            db.ApplicationRoles.Remove(app);
+            role.Applications.Add(application);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        protected override void Dispose(bool disposing)
+        public IHttpActionResult RemoveFromApplication(ApplicationRoles role, ODataActionParameters parameters)
         {
-            if (disposing)
+            if (!parameters.ContainsKey("applicationId"))
             {
-                db.Dispose();
+                return BadRequest("No applicationId");
             }
-            base.Dispose(disposing);
-        }
 
-        private bool ProjectExists(int key)
-        {
-            return db.Applications.Count(e => e.Id == key) > 0;
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationId = (int)parameters["applicationId"];
+            var application = db.Applications.FirstOrDefault(app => app.Id == applicationId);
+            if (application == null || !role.Applications.Contains(application))
+            {
+                return NotFound();
+            }
+
+            role.Applications.Remove(application);
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
 }
