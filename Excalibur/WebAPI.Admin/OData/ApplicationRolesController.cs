@@ -25,14 +25,14 @@ namespace WebAPI.Admin.OData
                 return BadRequest("No applicationIds");
             }
 
-            var role = db.ApplicationRoles.Find(key);
+            var role = db.ApplicationRoles.Include(r => r.Applications).FirstOrDefault(r => r.Id == key);
 
             if (role == null)
             {
                 return NotFound();
             }
 
-            var applicationIds = (ICollection<int>)parameters["applicationIds"];
+            var applicationIds = parameters["applicationIds"] as IEnumerable<int>;
             var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
 
             foreach (var application in applications)
@@ -51,14 +51,14 @@ namespace WebAPI.Admin.OData
                 return BadRequest("No applicationIds");
             }
 
-            var role = db.ApplicationRoles.Find(key);
+            var role = db.ApplicationRoles.Include(r => r.Applications).FirstOrDefault(r => r.Id == key);
 
             if (role == null)
             {
                 return NotFound();
             }
 
-            var applicationIds = (ICollection<int>)parameters["applicationIds"];
+            var applicationIds = parameters["applicationIds"] as IEnumerable<int>;
             var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
 
             foreach (var application in applications)
