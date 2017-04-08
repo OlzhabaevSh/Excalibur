@@ -18,12 +18,14 @@ namespace WebAPI.Admin.OData
 {
     public partial class ApplicationRolesController : ODataController
     {
-        public IHttpActionResult AddToApplication(ApplicationRoles role, ODataActionParameters parameters)
+        public IHttpActionResult AddToApplication(int key, ODataActionParameters parameters)
         {
             if (!parameters.ContainsKey("applicationId"))
             {
                 return BadRequest("No applicationId");
             }
+
+            var role = db.ApplicationRoles.Find(key);
 
             if (role == null)
             {
@@ -31,7 +33,7 @@ namespace WebAPI.Admin.OData
             }
 
             var applicationId = (int)parameters["applicationId"];
-            var application = db.Applications.FirstOrDefault(app => app.Id == applicationId);
+            var application = db.Applications.Find(applicationId);
             if (application == null)
             {
                 return NotFound();
@@ -43,12 +45,14 @@ namespace WebAPI.Admin.OData
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        public IHttpActionResult RemoveFromApplication(ApplicationRoles role, ODataActionParameters parameters)
+        public IHttpActionResult RemoveFromApplication(int key, ODataActionParameters parameters)
         {
             if (!parameters.ContainsKey("applicationId"))
             {
                 return BadRequest("No applicationId");
             }
+
+            var role = db.ApplicationRoles.Find(key);
 
             if (role == null)
             {
@@ -56,7 +60,7 @@ namespace WebAPI.Admin.OData
             }
 
             var applicationId = (int)parameters["applicationId"];
-            var application = db.Applications.FirstOrDefault(app => app.Id == applicationId);
+            var application = db.Applications.Find(applicationId);
             if (application == null || !role.Applications.Contains(application))
             {
                 return NotFound();
