@@ -16,108 +16,119 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    [Authorize]
-    public class ApplicationRolesController : ODataController
+    public partial class ApplicationRolesController : ODataController
     {
-        private ApplicationDbContext db;
-
-        public ApplicationRolesController(ApplicationDbContext dbContext)
+        public IHttpActionResult AddToApplications(int key, ODataActionParameters parameters)
         {
-            db = dbContext;
-        }
-
-        // GET: odata/Projects
-        [EnableQuery]
-        public IQueryable<ApplicationRoles> GetApplicationRoles()
-        {
-            return db.ApplicationRoles;
-        }
-
-        // GET: odata/Projects(5)
-        [EnableQuery]
-        public SingleResult<ApplicationRoles> GetApplicationRoles([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.ApplicationRoles.Where(app => app.Id == key));
-        }
-
-        // PUT: odata/Projects(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationRoles> patch)
-        {
-            Validate(patch.GetInstance());
-
-            if (!ModelState.IsValid)
+            if (!parameters.ContainsKey("applicationIds"))
             {
-                return BadRequest(ModelState);
+                return BadRequest("No applicationIds");
             }
 
-            ApplicationRoles app = db.ApplicationRoles.Find(key);
-            if (app == null)
+            var role = db.ApplicationRoles.Include(r => r.Applications).FirstOrDefault(r => r.Id == key);
+
+            if (role == null)
             {
                 return NotFound();
             }
 
-            patch.Put(app);
+            var applicationIds = parameters["applicationIds"] as IEnumerable<int>;
+            var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
 
-            try
+            foreach (var application in applications)
             {
-                db.SaveChanges();
+                role.Applications.Add(application);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProjectExists(key))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Updated(app);
-        }
-
-        // POST: odata/Projects
-        public IHttpActionResult Post(ApplicationRoles app)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ApplicationRoles.Add(app);
-            db.SaveChanges();
-
-            return Created(app);
-        }
-
-        // DELETE: odata/Projects(5)
-        public IHttpActionResult Delete([FromODataUri] int key)
-        {
-            Application app = db.Applications.Find(key);
-            if (app == null)
-            {
-                return NotFound();
-            }
-
-            db.Applications.Remove(app);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        protected override void Dispose(bool disposing)
+        public IHttpActionResult RemoveFromApplications(int key, ODataActionParameters parameters)
         {
-            if (disposing)
+            if (!parameters.ContainsKey("applicationIds"))
             {
-                db.Dispose();
+                return BadRequest("No applicationIds");
             }
-            base.Dispose(disposing);
+
+            var role = db.ApplicationRoles.Include(r => r.Applications).FirstOrDefault(r => r.Id == key);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationIds = parameters["applicationIds"] as IEnumerable<int>;
+            var applications = db.Applications.Where(a => applicationIds.Contains(a.Id));
+
+            foreach (var application in applications)
+            {
+                role.Applications.Remove(application);
+            }
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private bool ProjectExists(int key)
+        public IHttpActionResult AddToApplication(int key, ODataActionParameters parameters)
         {
-            return db.Applications.Count(e => e.Id == key) > 0;
+            if (!parameters.ContainsKey("applicationId"))
+            {
+                return BadRequest("No applicationId");
+            }
+
+            var role = db.ApplicationRoles.Find(key);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationId = (int)parameters["applicationId"];
+            var application = db.Applications.Find(applicationId);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            if (!role.Applications.Contains(application))
+            {
+                role.Applications.Add(application);
+                db.SaveChanges();
+            }
+            
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        public IHttpActionResult RemoveFromApplication(int key, ODataActionParameters parameters)
+        {
+            if (!parameters.ContainsKey("applicationId"))
+            {
+                return BadRequest("No applicationId");
+            }
+
+            var role = db.ApplicationRoles.Find(key);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var applicationId = (int)parameters["applicationId"];
+            var application = db.Applications.Find(applicationId);
+            if (application == null || !role.Applications.Contains(application))
+            {
+                return NotFound();
+            }
+
+            if (role.Applications.Contains(application))
+            {
+                role.Applications.Remove(application);
+                db.SaveChanges();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
+
 }

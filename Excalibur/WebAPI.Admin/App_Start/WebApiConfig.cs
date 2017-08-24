@@ -34,11 +34,19 @@ namespace WebAPI.Admin
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
 
-            builder.EntitySet<Application>("Applications");
-            builder.EntitySet<ApplicationUser>("ApplicationUsers");
-            builder.EntitySet<ApplicationList>("ApplicationLists");
-            builder.EntitySet<ApplicationRoles>("ApplicationRoles");
-            builder.EntitySet<ApplicationUser>("ApplicationUsers");
+            var applications = builder.EntitySet<Application>("Applications");
+            var applicationUsers = builder.EntitySet<ApplicationUser>("ApplicationUsers");
+            var applicationLists = builder.EntitySet<ApplicationList>("ApplicationLists");
+            var applicationRoles = builder.EntitySet<ApplicationRoles>("ApplicationRoles");
+
+            applicationRoles.EntityType.Action("AddToApplication")
+                .Parameter<int>("applicationId");
+            applicationRoles.EntityType.Action("RemoveFromApplication")
+                .Parameter<int>("applicationId");
+            applicationRoles.EntityType.Action("AddToApplications")
+                .CollectionParameter<int>("applicationIds");
+            applicationRoles.EntityType.Action("RemoveFromApplications")
+                .CollectionParameter<int>("applicationIds");
 
             config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 

@@ -16,33 +16,31 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    [Authorize]
-    public class ApplicationUsersController : ODataController
+    public partial class ApplicationRolesController : ODataController
     {
-        // GET: ApplicationUsers
         private ApplicationDbContext db;
 
-        public ApplicationUsersController(ApplicationDbContext dbContext)
+        public ApplicationRolesController(ApplicationDbContext dbContext)
         {
             db = dbContext;
         }
 
         // GET: odata/Projects
         [EnableQuery]
-        public IQueryable<Application> GetApplicationUsers()
+        public IQueryable<ApplicationRoles> GetApplicationRoles()
         {
-            return db.Applications;
+            return db.ApplicationRoles;
         }
 
         // GET: odata/Projects(5)
         [EnableQuery]
-        public SingleResult<ApplicationUser> GetApplicationUser([FromODataUri] string key)
+        public SingleResult<ApplicationRoles> GetApplicationRoles([FromODataUri] int key)
         {
-            return SingleResult.Create(db.ApplicationUsers.Where(app => app.Id == key));
+            return SingleResult.Create(db.ApplicationRoles.Where(app => app.Id == key));
         }
 
         // PUT: odata/Projects(5)
-        public IHttpActionResult Put([FromODataUri] string key, Delta<ApplicationUser> patch)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationRoles> patch)
         {
             Validate(patch.GetInstance());
 
@@ -51,7 +49,7 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser app = db.ApplicationUsers.Find(key);
+            ApplicationRoles app = db.ApplicationRoles.Find(key);
             if (app == null)
             {
                 return NotFound();
@@ -79,14 +77,14 @@ namespace WebAPI.Admin.OData
         }
 
         // POST: odata/Projects
-        public IHttpActionResult Post(ApplicationUser app)
+        public IHttpActionResult Post(ApplicationRoles app)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.ApplicationUsers.Add(app);
+            db.ApplicationRoles.Add(app);
             db.SaveChanges();
 
             return Created(app);
@@ -95,13 +93,13 @@ namespace WebAPI.Admin.OData
         // DELETE: odata/Projects(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            ApplicationUser app = db.ApplicationUsers.Find(key);
+            ApplicationRoles app = db.ApplicationRoles.Find(key);
             if (app == null)
             {
                 return NotFound();
             }
 
-            db.ApplicationUsers.Remove(app);
+            db.ApplicationRoles.Remove(app);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -116,9 +114,9 @@ namespace WebAPI.Admin.OData
             base.Dispose(disposing);
         }
 
-        private bool ProjectExists(string key)
+        private bool ProjectExists(int key)
         {
-            return db.ApplicationUsers.Count(e => e.Id == key) > 0;
+            return db.Applications.Count(e => e.Id == key) > 0;
         }
     }
 }

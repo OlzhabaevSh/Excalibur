@@ -16,32 +16,32 @@ using Core.Admin.Models;
 
 namespace WebAPI.Admin.OData
 {
-    [Authorize]
-    public class ApplicationListsController : ODataController
+    public class ApplicationUsersController : ODataController
     {
+        // GET: ApplicationUsers
         private ApplicationDbContext db;
 
-        public ApplicationListsController(ApplicationDbContext dbContext)
+        public ApplicationUsersController(ApplicationDbContext dbContext)
         {
             db = dbContext;
         }
 
         // GET: odata/Projects
         [EnableQuery]
-        public IQueryable<ApplicationList> GetApplicationLists()
+        public IQueryable<ApplicationUser> GetApplicationUsers()
         {
-            return db.ApplicationLists;
+            return db.ApplicationUsers;
         }
 
         // GET: odata/Projects(5)
         [EnableQuery]
-        public SingleResult<ApplicationList> GetApplicationList([FromODataUri] int key)
+        public SingleResult<ApplicationUser> GetApplicationUser([FromODataUri] string key)
         {
-            return SingleResult.Create(db.ApplicationLists.Where(app => app.Id == key));
+            return SingleResult.Create(db.ApplicationUsers.Where(app => app.Id == key));
         }
 
         // PUT: odata/Projects(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<ApplicationList> patch)
+        public IHttpActionResult Put([FromODataUri] string key, Delta<ApplicationUser> patch)
         {
             Validate(patch.GetInstance());
 
@@ -50,7 +50,7 @@ namespace WebAPI.Admin.OData
                 return BadRequest(ModelState);
             }
 
-            ApplicationList app = db.ApplicationLists.Find(key);
+            ApplicationUser app = db.ApplicationUsers.Find(key);
             if (app == null)
             {
                 return NotFound();
@@ -78,14 +78,14 @@ namespace WebAPI.Admin.OData
         }
 
         // POST: odata/Projects
-        public IHttpActionResult Post(ApplicationList app)
+        public IHttpActionResult Post(ApplicationUser app)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.ApplicationLists.Add(app);
+            db.ApplicationUsers.Add(app);
             db.SaveChanges();
 
             return Created(app);
@@ -94,13 +94,13 @@ namespace WebAPI.Admin.OData
         // DELETE: odata/Projects(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            ApplicationList app = db.ApplicationLists.Find(key);
+            ApplicationUser app = db.ApplicationUsers.Find(key);
             if (app == null)
             {
                 return NotFound();
             }
 
-            db.ApplicationLists.Remove(app);
+            db.ApplicationUsers.Remove(app);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -115,9 +115,9 @@ namespace WebAPI.Admin.OData
             base.Dispose(disposing);
         }
 
-        private bool ProjectExists(int key)
+        private bool ProjectExists(string key)
         {
-            return db.Applications.Count(e => e.Id == key) > 0;
+            return db.ApplicationUsers.Count(e => e.Id == key) > 0;
         }
     }
 }
