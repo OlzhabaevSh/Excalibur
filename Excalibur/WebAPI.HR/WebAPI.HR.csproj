@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MyCleverDALController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -101,8 +103,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Excalibur.Utilities.CleverDAL.ADO\Excalibur.Utilities.CleverDAL.ADO.csproj">
+      <Project>{5277c6fc-3fd8-48fa-9c53-ce3d65fcd9e3}</Project>
+      <Name>Excalibur.Utilities.CleverDAL.ADO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Excalibur.Utilities.Core\Excalibur.Utilities.Core.csproj">
+      <Project>{5925bbfa-e414-4ed7-9bd5-a929e69c6b7f}</Project>
+      <Name>Excalibur.Utilities.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
