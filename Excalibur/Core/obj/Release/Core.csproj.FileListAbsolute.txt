@@ -1,0 +1,12 @@
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\Core.dll.config
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\Core.dll
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\Core.pdb
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\EntityFramework.dll
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\EntityFramework.SqlServer.dll
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\EntityFramework.xml
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\EntityFramework.SqlServer.xml
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\ru\EntityFramework.resources.dll
+D:\Repositories\Excalibur\Excalibur\Core\bin\Release\ru\EntityFramework.SqlServer.resources.dll
+D:\Repositories\Excalibur\Excalibur\Core\obj\Release\Core.csprojResolveAssemblyReference.cache
+D:\Repositories\Excalibur\Excalibur\Core\obj\Release\Core.dll
+D:\Repositories\Excalibur\Excalibur\Core\obj\Release\Core.pdb

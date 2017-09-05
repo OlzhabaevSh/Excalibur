@@ -1,0 +1,6 @@
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\bin\Debug\Excalibur.Utilities.Core.dll
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\bin\Debug\Excalibur.Utilities.Core.pdb
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\obj\Debug\Excalibur.Utilities.Core.csproj.CoreCompileInputs.cache
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\obj\Debug\Excalibur.Utilities.Core.dll
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\obj\Debug\Excalibur.Utilities.Core.pdb
+D:\Repositories\Excalibur\Excalibur\Excalibur.Utilities.Core\obj\Debug\Excalibur.Utilities.Core.csprojResolveAssemblyReference.cache
